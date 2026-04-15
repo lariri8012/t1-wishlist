@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T1 Wishlist V9 - Soft & Flat</title>
+    <title>T1 Wishlist V10 - Perfect Edition</title>
     <style>
-        /* 柔和明亮版主題色調 (純色塊, 無漸變) */
         :root { 
-            --t1-red: #D9384A; /* 柔和少少嘅霧面 T1 紅 */
-            --t1-charcoal: #2D2D2D; /* 柔和嘅炭灰色代替死黑 */
-            --bg-color: #F8F9FA; /* 明亮乾淨嘅淺灰白底色 */
-            --card-bg: #FFFFFF; /* 純白卡片 */
+            --t1-red: #D9384A; 
+            --t1-charcoal: #2D2D2D; 
+            --bg-color: #F8F9FA; 
+            --card-bg: #FFFFFF; 
             
-            /* 分類專用柔和色塊 */
             --cat-hg-bg: #FFF0F2; 
             --cat-hg-border: #FFB3C1;
             --cat-pre-bg: #F0F7FF; 
@@ -23,64 +21,59 @@
         
         body { background: var(--bg-color); color: var(--t1-charcoal); font-family: -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; padding: 15px; padding-bottom: 200px; }
         
-        /* Header */
         .header { text-align: center; padding: 20px 0; border-bottom: 4px solid var(--t1-red); position: sticky; top: 0; background: var(--bg-color); z-index: 1000; }
         .header h1 { margin:0; font-size: 22px; font-weight: 900; letter-spacing: 1px; color: var(--t1-charcoal); }
         .header p { margin: 5px 0 0 0; font-size: 12px; color: #888; font-weight: bold; }
         
         .currency-bar { background: var(--card-bg); padding: 12px; border-radius: 12px; font-size: 12px; margin: 15px 0; text-align: center; font-weight: bold; border: 2px solid #E0E0E0; color: #666; }
         
-        /* Category Sections */
         .category-section { margin-top: 35px; border-radius: 16px; border: 3px solid; padding: 15px 10px; }
         .category-title { font-size: 14px; font-weight: 900; margin: -30px 0 15px 10px; display: inline-block; padding: 6px 16px; border-radius: 20px; }
         
         .cat-hg { border-color: var(--cat-hg-border); background: var(--cat-hg-bg); }
         .cat-hg .category-title { background: var(--t1-red); color: white; }
-        
         .cat-pre { border-color: var(--cat-pre-border); background: var(--cat-pre-bg); }
         .cat-pre .category-title { background: #3b82f6; color: white; }
-        
         .cat-general { border-color: var(--cat-gen-border); background: var(--cat-gen-bg); }
         .cat-general .category-title { background: #888; color: white; }
         
-        /* Item Row - 未選擇狀態 (半透明隱藏) */
+        /* 基礎商品 Row */
         .item-row { 
-            background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 10px; 
+            background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 12px; 
             display: flex; flex-direction: column; 
             border: 2px solid transparent;
-            opacity: 0.6; /* 降低透明度 */
-            transform: scale(0.98); /* 稍微縮細 */
-            transition: all 0.2s ease-in-out; 
+            opacity: 0.6; transform: scale(0.98); transition: all 0.2s ease; 
         }
-        
-        /* Item Row - 已選擇狀態 (著燈彈出) */
         .item-row.active {
-            opacity: 1; /* 恢復完全唔透明 */
-            transform: scale(1); /* 恢復正常大細 */
-            border: 2px solid var(--t1-red); /* T1紅框 */
-            box-shadow: 0 4px 12px rgba(217, 56, 74, 0.15); /* 極柔和嘅提示光暈，唔係傳統黑陰影 */
+            opacity: 1; transform: scale(1); border: 2px solid var(--t1-red); 
+            box-shadow: 0 4px 12px rgba(217, 56, 74, 0.15); 
         }
         
-        .item-info { display: flex; flex-direction: column; margin-bottom: 12px; }
+        .item-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .item-info { flex: 1; padding-right: 10px; }
         .item-id { font-size: 13px; font-weight: 900; margin-bottom: 4px; color: var(--t1-red); }
         .item-name { font-size: 14px; font-weight: bold; line-height: 1.4; color: var(--t1-charcoal); }
         
-        .player-select { background: #F5F5F5; color: var(--t1-charcoal); border: 2px solid #E0E0E0; padding: 8px 12px; border-radius: 20px; width: 100%; margin-top: 8px; font-size: 13px; font-weight: bold; outline: none; text-align: center; }
-        .player-select:focus { border-color: var(--t1-red); }
-        
-        .controls { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-        
-        .price-input { background: #F5F5F5; border: 2px solid #E0E0E0; color: var(--t1-charcoal); padding: 10px; border-radius: 12px; width: 45%; box-sizing: border-box; font-size: 14px; font-weight: bold; text-align: center; outline: none; -moz-appearance: textfield; }
+        /* 價格輸入框 (統一設計) */
+        .price-input { background: #F5F5F5; border: 2px solid #E0E0E0; color: var(--t1-charcoal); padding: 8px 10px; border-radius: 10px; width: 85px; font-size: 13px; font-weight: bold; text-align: center; outline: none; -moz-appearance: textfield; }
         .price-input::-webkit-outer-spin-button, .price-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .price-input:focus { border-color: var(--t1-red); background: #FFF; }
         
-        .qty-box { display: flex; align-items: center; background: #F5F5F5; border: 2px solid #E0E0E0; border-radius: 20px; padding: 2px; width: 50%; justify-content: space-between; }
-        .qty-btn { background: #E0E0E0; color: var(--t1-charcoal); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; font-weight: bold; cursor: pointer; }
+        /* 數量控制器 */
+        .qty-box { display: flex; align-items: center; background: #F5F5F5; border: 2px solid #E0E0E0; border-radius: 20px; padding: 2px; width: 90px; justify-content: space-between; }
+        .qty-btn { background: #E0E0E0; color: var(--t1-charcoal); border: none; width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; }
         .qty-btn:active { background: var(--t1-red); color: white; }
-        .qty-input { background: transparent; border: none; color: var(--t1-charcoal); width: 30px; text-align: center; font-size: 16px; font-weight: bold; outline: none; -moz-appearance: textfield; padding: 0; }
+        .qty-input { background: transparent; border: none; color: var(--t1-charcoal); width: 26px; text-align: center; font-size: 14px; font-weight: bold; outline: none; -moz-appearance: textfield; padding: 0; }
         .qty-input::-webkit-outer-spin-button, .qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
-        /* Flat Footer */
+        /* 選手子清單專用設計 */
+        .player-list { background: #F8F9FA; border-radius: 10px; border: 1px solid #E0E0E0; overflow: hidden; margin-top: 5px; }
+        .player-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid #EBEBEB; transition: background 0.2s; }
+        .player-row:last-child { border-bottom: none; }
+        .player-row.active { background: #FFF0F2; } /* 揀咗嗰個選手會微紅高亮 */
+        .player-name { font-size: 13px; font-weight: bold; color: #555; }
+        .player-row.active .player-name { color: var(--t1-red); }
+
         .footer { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card-bg); border-top: 3px solid var(--t1-red); padding: 15px; text-align: center; z-index: 1000; box-shadow: 0 -4px 10px rgba(0,0,0,0.05); }
         .total-krw { font-size: 28px; font-weight: 900; color: var(--t1-red); }
         .converts { font-size: 12px; color: #888; margin-top: 5px; font-weight: bold; }
@@ -91,7 +84,7 @@
 
 <div class="header">
     <h1>T1 HG獻金大計 🐿️🐯🐈‍⬛🐨🐶</h1>
-    <p>忠告:①想就是買②不買會後悔</p>
+    <p>①想就是買②不買會後悔</p>
 </div>
 
 <div class="currency-bar" id="rateBar">更新匯率中...</div>
@@ -107,10 +100,12 @@
 <script>
     let rates = { JPY: 0.111, HKD: 0.0057, TWD: 0.0235 };
     const players = ["DORAN", "ONER", "FAKER", "PEYZ", "KERIA"];
-    const cart = {};
+    
+    // 儲存數據：價格跟 ID 走，數量跟 Key (ID 或者 ID-Player) 走
+    const prices = {}; 
+    const qtys = {};
 
     const items = [
-        // GENERAL
         { id: 1, name: "[LoL] 2026 T1 Uniform Jacket", cat: "gen" }, { id: 2, name: "[RSG x T1] Amal Plushie Keychain", cat: "gen" },
         { id: 3, name: "[RSG x T1] Amal Figure Keychain", cat: "gen" }, { id: 4, name: "[RSG x T1] Amal and ATi Desk Mat", cat: "gen" },
         { id: 5, name: "[RSG x T1] Amal Plushie", cat: "gen" }, { id: 6, name: "Other Friends Plushie Keychain", players: true, cat: "gen" },
@@ -126,8 +121,6 @@
         { id: 40, name: "T1 Picnic Glass Set", cat: "gen" }, { id: 41, name: "T1 Picnic Cutlery Set", cat: "gen" },
         { id: 42, name: "T1 Picnic Cooler Bag", cat: "gen" }, { id: 43, name: "T1 Mini Memory Camera", cat: "gen" },
         { id: 44, name: "T1 LCD Writing Tablet", cat: "gen" },
-
-        // HOMEGROUND
         { id: 23, name: "T1 Home Ground Player T-Shirt - Doran", cat: "hg" }, { id: 24, name: "T1 Home Ground Player T-Shirt - Oner", cat: "hg" },
         { id: 25, name: "T1 Home Ground Player T-Shirt - Faker", cat: "hg" }, { id: 26, name: "T1 Home Ground Player T-Shirt - Peyz", cat: "hg" },
         { id: 27, name: "T1 Home Ground Player T-Shirt - Keria", cat: "hg" }, { id: 28, name: "T1 Home Ground Player Pin Button", players: true, cat: "hg" },
@@ -136,8 +129,6 @@
         { id: 33, name: "T1 Home Ground Bandana", cat: "hg" }, { id: 34, name: "T1 Home Ground Reusable Bag", cat: "hg" },
         { id: 35, name: "T1 Home Ground Pin Button Set", cat: "hg" }, { id: 36, name: "T1 Home Ground Circus T-Shirt - Pigment", cat: "hg" },
         { id: 37, name: "T1 Home Ground Circus T-Shirt - White", cat: "hg" },
-
-        // PRE-PURCHASE
         { id: 45, name: "T1 Signature Perfume", cat: "pre" }, { id: 46, name: "[T1Kiz] 4-Cut Photo Holder Keychain", cat: "pre" },
         { id: 47, name: "[T1Kiz] Boucle Keychain", players: true, cat: "pre" }, { id: 48, name: "[T1Kiz] Random Comic Strip Sticker Set", cat: "pre" },
         { id: 49, name: "[T1Kiz] Reusable Bag", cat: "pre" }, { id: 50, name: "[T1Kiz] Deco Sticker Set", cat: "pre" },
@@ -158,12 +149,11 @@
             rates = { JPY: d.rates.JPY, HKD: d.rates.HKD, TWD: d.rates.TWD };
             document.getElementById('rateBar').innerText = `1k KRW ≈ ${Math.round(rates.JPY*1000)} JPY | ${Math.round(rates.HKD*1000,1)} HKD | ${Math.round(rates.TWD*1000,1)} TWD`;
         } catch(e) { document.getElementById('rateBar').innerText = "Using default rates"; }
-        updateTotal();
+        calcTotal();
     }
 
     function init() {
         const app = document.getElementById('app');
-        
         const sections = [
             { key: 'hg', title: '🎪 HOMEGROUND EXCLUSIVE', class: 'cat-hg' },
             { key: 'pre', title: '🛍️ PRE-PURCHASE EXCLUSIVE', class: 'cat-pre' },
@@ -172,69 +162,113 @@
 
         let html = "";
         sections.forEach(sec => {
-            html += `<div class="category-section ${sec.class}">
-                        <div class="category-title">${sec.title}</div>`;
-            items.filter(item => item.cat === sec.key).forEach(item => {
-                html += createRow(item);
-            });
+            html += `<div class="category-section ${sec.class}"><div class="category-title">${sec.title}</div>`;
+            items.filter(item => item.cat === sec.key).forEach(item => { html += createRow(item); });
             html += `</div>`;
         });
-        
         app.innerHTML = html;
         getRates();
     }
 
     function createRow(item) {
-        cart[item.id] = { qty: 0, price: 0 };
-        return `
-            <div class="item-row" id="row-${item.id}">
-                <div class="item-info">
-                    <div class="item-id">#${item.id.toString().padStart(2, '0')}</div>
-                    <div class="item-name">${item.name}</div>
-                    ${item.players ? `<select class="player-select"><option>👇 選擇選手款式</option>${players.map(p=>`<option>${p}</option>`).join('')}</select>` : ''}
-                </div>
-                <div class="controls">
-                    <input type="number" class="price-input" placeholder="₩ 價格" oninput="updatePrice(${item.id}, this.value)">
-                    <div class="qty-box">
-                        <button class="qty-btn" onclick="stepQty(${item.id}, -1)">-</button>
-                        <input type="number" class="qty-input" id="qty-${item.id}" value="0" oninput="setQty(${item.id}, this.value)">
-                        <button class="qty-btn" onclick="stepQty(${item.id}, 1)">+</button>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    function stepQty(id, delta) {
-        const input = document.getElementById(`qty-${id}`);
-        let newQty = Math.max(0, parseInt(input.value || 0) + delta);
-        input.value = newQty;
-        setQty(id, newQty);
-    }
-
-    function setQty(id, val) {
-        let newQty = Math.max(0, parseInt(val) || 0);
-        cart[id].qty = newQty;
+        prices[item.id] = 0; // 初始化價格
         
-        // 控制視覺高亮狀態
-        const row = document.getElementById(`row-${id}`);
-        if(newQty > 0) {
-            row.classList.add('active');
-        } else {
-            row.classList.remove('active');
+        // 如果無選手，就出普通 Qty Box
+        let controlsHTML = '';
+        if (!item.players) {
+            qtys[item.id] = 0;
+            controlsHTML = `
+                <div class="qty-box">
+                    <button class="qty-btn" onclick="updateQty('${item.id}', -1, ${item.id})">-</button>
+                    <input type="number" class="qty-input" id="qty-${item.id}" value="0" oninput="setQty('${item.id}', this.value, ${item.id})">
+                    <button class="qty-btn" onclick="updateQty('${item.id}', 1, ${item.id})">+</button>
+                </div>
+            `;
         }
         
-        updateTotal();
+        let html = `
+            <div class="item-row" id="row-${item.id}">
+                <div class="item-top">
+                    <div class="item-info">
+                        <div class="item-id">#${item.id.toString().padStart(2, '0')}</div>
+                        <div class="item-name">${item.name}</div>
+                    </div>
+                    <div style="display:flex; gap:10px;">
+                        <input type="number" class="price-input" placeholder="₩ 價格" oninput="updatePrice(${item.id}, this.value)">
+                        ${controlsHTML}
+                    </div>
+                </div>
+        `;
+
+        // 如果有選手，就生成獨立選手清單
+        if (item.players) {
+            html += `<div class="player-list">`;
+            players.forEach(p => {
+                const key = `${item.id}-${p}`;
+                qtys[key] = 0;
+                html += `
+                    <div class="player-row" id="prow-${key}">
+                        <div class="player-name">${p}</div>
+                        <div class="qty-box">
+                            <button class="qty-btn" onclick="updateQty('${key}', -1, ${item.id})">-</button>
+                            <input type="number" class="qty-input" id="qty-${key}" value="0" oninput="setQty('${key}', this.value, ${item.id})">
+                            <button class="qty-btn" onclick="updateQty('${key}', 1, ${item.id})">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+        }
+
+        html += `</div>`;
+        return html;
     }
 
     function updatePrice(id, val) {
-        cart[id].price = parseInt(val) || 0;
-        updateTotal();
+        prices[id] = parseInt(val) || 0;
+        calcTotal();
     }
 
-    function updateTotal() {
+    function updateQty(key, delta, parentId) {
+        const input = document.getElementById(`qty-${key}`);
+        let newQty = Math.max(0, parseInt(input.value || 0) + delta);
+        input.value = newQty;
+        setQty(key, newQty, parentId);
+    }
+
+    function setQty(key, val, parentId) {
+        qtys[key] = Math.max(0, parseInt(val) || 0);
+        
+        // 處理選手列高亮
+        const prow = document.getElementById(`prow-${key}`);
+        if(prow) { qtys[key] > 0 ? prow.classList.add('active') : prow.classList.remove('active'); }
+        
+        // 處理主卡片高亮
+        const row = document.getElementById(`row-${parentId}`);
+        const item = items.find(i => i.id === parentId);
+        let anyActive = false;
+        
+        if (item.players) {
+            anyActive = players.some(p => qtys[`${parentId}-${p}`] > 0);
+        } else {
+            anyActive = qtys[parentId] > 0;
+        }
+        
+        anyActive ? row.classList.add('active') : row.classList.remove('active');
+        calcTotal();
+    }
+
+    function calcTotal() {
         let total = 0;
-        for(let id in cart) total += cart[id].qty * cart[id].price;
+        items.forEach(item => {
+            const p = prices[item.id] || 0;
+            if (item.players) {
+                players.forEach(player => { total += p * (qtys[`${item.id}-${player}`] || 0); });
+            } else {
+                total += p * (qtys[item.id] || 0);
+            }
+        });
+        
         document.getElementById('totalDisplay').innerText = total.toLocaleString() + ' KRW';
         document.getElementById('convDisplay').innerText = `≈ ${Math.round(total*rates.JPY).toLocaleString()} JPY | ${Math.round(total*rates.HKD).toLocaleString()} HKD | ${Math.round(total*rates.TWD).toLocaleString()} TWD`;
         
@@ -243,12 +277,10 @@
         const pcEl = document.getElementById('pcDisplay');
         if(count > 0) {
             pcEl.innerText = `✨ 達成！可獲 ${count} 張小卡 (差 ${next.toLocaleString()} 多一張)`;
-            pcEl.style.backgroundColor = '#FFD700';
-            pcEl.style.color = '#000';
+            pcEl.style.backgroundColor = '#FFD700'; pcEl.style.color = '#000';
         } else {
             pcEl.innerText = `還差 ${next.toLocaleString()} KRW 獲得小卡`;
-            pcEl.style.backgroundColor = '#E0E0E0';
-            pcEl.style.color = '#666';
+            pcEl.style.backgroundColor = '#E0E0E0'; pcEl.style.color = '#666';
         }
     }
 
