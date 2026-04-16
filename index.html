@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T1 HG Wishlist</title>
+    <title>T1 HG Wishlist v3.0</title>
     <style>
         :root { 
             --t1-red: #D9384A; --t1-charcoal: #2D2D2D; --bg-color: #F8F9FA; --card-bg: #FFFFFF; 
@@ -12,15 +12,14 @@
             --cat-gen-bg: #F0F0F0; --cat-gen-border: #CCCCCC;
         }
         
-        body { background: var(--bg-color); color: var(--t1-charcoal); font-family: -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; padding: 15px; padding-bottom: 240px; }
+        body { background: var(--bg-color); color: var(--t1-charcoal); font-family: -apple-system, sans-serif; margin: 0; padding: 15px; padding-bottom: 240px; }
         
         .header { text-align: center; padding: 20px 0; border-bottom: 4px solid var(--t1-red); position: sticky; top: 0; background: var(--bg-color); z-index: 1000; }
         .header h1 { margin:0; font-size: 22px; font-weight: 900; letter-spacing: 1px; color: var(--t1-charcoal); }
-        .header p { margin: 5px 0 0 0; font-size: 12px; color: #888; font-weight: bold; }
+        .header p { margin: 5px 0 0 0; font-size: 11px; color: #888; font-weight: bold; }
         
         .currency-bar { background: var(--card-bg); padding: 12px; border-radius: 12px; font-size: 12px; margin: 15px 0; text-align: center; font-weight: bold; border: 2px solid #E0E0E0; color: #666; }
         
-        /* Shop View Styles */
         .category-section { margin-top: 35px; border-radius: 16px; border: 3px solid; padding: 15px 10px; }
         .category-title { font-size: 14px; font-weight: 900; margin: -30px 0 15px 10px; display: inline-block; padding: 6px 16px; border-radius: 20px; }
         
@@ -31,50 +30,41 @@
         .item-row { background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 12px; display: flex; flex-direction: column; border: 2px solid transparent; opacity: 0.6; transform: scale(0.98); transition: all 0.2s ease; }
         .item-row.active { opacity: 1; transform: scale(1); border: 2px solid var(--t1-red); box-shadow: 0 4px 12px rgba(217, 56, 74, 0.15); }
         
-        .item-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .item-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
         .item-info { flex: 1; padding-right: 10px; }
-        .item-id { font-size: 13px; font-weight: 900; margin-bottom: 4px; color: var(--t1-red); }
+        .item-id { font-size: 11px; font-weight: 900; color: var(--t1-red); margin-bottom: 2px; }
         .item-name { font-size: 14px; font-weight: bold; line-height: 1.4; color: var(--t1-charcoal); }
         
-        .price-input { background: #F5F5F5; border: 2px solid #E0E0E0; color: var(--t1-charcoal); padding: 8px 10px; border-radius: 10px; width: 85px; font-size: 13px; font-weight: bold; text-align: center; outline: none; -moz-appearance: textfield; }
-        .price-input::-webkit-outer-spin-button, .price-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .price-input { background: #F5F5F5; border: 2px solid #E0E0E0; color: var(--t1-charcoal); padding: 8px 10px; border-radius: 10px; width: 85px; font-size: 13px; font-weight: bold; text-align: center; outline: none; }
         .price-input:focus { border-color: var(--t1-red); background: #FFF; }
         .qty-box { display: flex; align-items: center; background: #F5F5F5; border: 2px solid #E0E0E0; border-radius: 20px; padding: 2px; width: 90px; justify-content: space-between; }
         .qty-btn { background: #E0E0E0; color: var(--t1-charcoal); border: none; width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; }
-        .qty-btn:active { background: var(--t1-red); color: white; }
-        .qty-input { background: transparent; border: none; color: var(--t1-charcoal); width: 26px; text-align: center; font-size: 14px; font-weight: bold; outline: none; padding: 0; }
-        .qty-input::-webkit-outer-spin-button, .qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .qty-input { background: transparent; border: none; color: var(--t1-charcoal); width: 26px; text-align: center; font-size: 14px; font-weight: bold; outline: none; }
         
         .player-list { background: #F8F9FA; border-radius: 10px; border: 1px solid #E0E0E0; overflow: hidden; margin-top: 5px; }
         .player-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid #EBEBEB; }
-        .player-row:last-child { border-bottom: none; }
         .player-row.active { background: #FFF0F2; }
         .player-name { font-size: 13px; font-weight: bold; color: #555; }
-        .player-row.active .player-name { color: var(--t1-red); }
-
-        /* Cart View Styles */
+        
         #cartView { display: none; }
-        .cart-header { font-size: 18px; font-weight: 900; margin: 20px 0 15px; padding-bottom: 10px; border-bottom: 2px solid #E0E0E0; }
+        .cart-header { font-size: 18px; font-weight: 900; margin: 20px 0 10px; padding-bottom: 10px; border-bottom: 2px solid #E0E0E0; display: flex; justify-content: space-between; align-items: center; }
         .cart-item { background: var(--card-bg); padding: 12px 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #E0E0E0; display: flex; justify-content: space-between; align-items: center; }
-        .cart-item-name { font-size: 14px; font-weight: bold; margin-bottom: 4px; }
-        .cart-item-meta { font-size: 12px; color: #888; }
-        .cart-empty { text-align: center; padding: 40px 20px; color: #888; font-weight: bold; background: var(--card-bg); border-radius: 12px; border: 2px dashed #CCC; }
+        .cart-item-name { font-size: 13px; font-weight: bold; margin-bottom: 4px; }
+        .cart-item-meta { font-size: 11px; color: #888; }
         
         .btn-save-order { background: var(--t1-red); color: white; border: none; padding: 15px; border-radius: 12px; width: 100%; font-size: 16px; font-weight: bold; margin-top: 20px; cursor: pointer; box-shadow: 0 4px 10px rgba(217, 56, 74, 0.3); }
-        .btn-save-order:active { transform: scale(0.98); }
+        .btn-clear-all { background: #666; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; margin-top: 50px; width: 100%; opacity: 0.7; }
         
         .order-history-card { background: #FFF0F2; border: 2px solid #FFB3C1; padding: 15px; border-radius: 12px; margin-top: 15px; }
-        .order-title { font-weight: 900; color: var(--t1-red); margin-bottom: 10px; font-size: 15px; display: flex; justify-content: space-between; align-items: flex-start; }
-        .order-item-line { font-size: 13px; color: #555; margin-bottom: 4px; border-bottom: 1px dashed #FFD6DE; padding-bottom: 4px; }
+        .order-title { font-weight: 900; color: var(--t1-red); margin-bottom: 10px; font-size: 14px; }
+        .order-item-line { font-size: 12px; color: #555; margin-bottom: 4px; border-bottom: 1px dashed #FFD6DE; padding-bottom: 4px; }
         
-        /* Total & Tab Footer */
-        .footer-total { position: fixed; bottom: 65px; left: 0; right: 0; background: var(--card-bg); border-top: 3px solid var(--t1-red); padding: 10px 15px; text-align: center; z-index: 999; box-shadow: 0 -4px 10px rgba(0,0,0,0.05); }
-        .total-krw { font-size: 24px; font-weight: 900; color: var(--t1-red); margin-bottom: 2px;}
-        .converts { font-size: 13px; color: #888; font-weight: bold; margin-bottom: 6px; }
-        .pc-hint { font-size: 11px; color: #000; background: #FFD700; padding: 4px 12px; border-radius: 20px; display: inline-block; font-weight: bold; }
+        .footer-total { position: fixed; bottom: 65px; left: 0; right: 0; background: var(--card-bg); border-top: 3px solid var(--t1-red); padding: 10px 15px; text-align: center; z-index: 999; }
+        .total-krw { font-size: 24px; font-weight: 900; color: var(--t1-red); }
+        .pc-hint { font-size: 11px; margin-top: 5px; color: #000; background: #FFD700; padding: 4px 12px; border-radius: 20px; display: inline-block; font-weight: bold; }
         
         .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #2D2D2D; display: flex; height: 65px; z-index: 1000; }
-        .tab-btn { flex: 1; background: transparent; color: #888; border: none; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .tab-btn { flex: 1; background: transparent; color: #888; border: none; font-size: 15px; font-weight: bold; cursor: pointer; }
         .tab-btn.active { color: white; background: var(--t1-red); }
     </style>
 </head>
@@ -83,6 +73,7 @@
 <div class="header">
     <h1>T1 HG獻金大計 🐿️🐯🐈‍⬛🐨🐶</h1>
     <p>①想就是買②不買會後悔</p>
+    <p>使用最新版請手動刷新網頁</p>
 </div>
 
 <div class="currency-bar" id="rateBar">更新匯率中...</div>
@@ -90,107 +81,118 @@
 <div id="shopView"></div>
 
 <div id="cartView">
-    <div class="cart-header">🛒 目前購物車明細</div>
+    <div class="cart-header">🛒 購物車明細</div>
     <div id="cartContent"></div>
     <button class="btn-save-order" onclick="saveOrder()" id="saveBtn" style="display:none;">📦 儲存為新訂單 (結算並清空)</button>
     
-    <div class="cart-header" style="margin-top: 40px;">📜 已儲存分單 (Order History)</div>
-    <div id="orderHistory">
-        <div style="text-align:center; color:#888; font-size:12px; margin-top:20px;">暫無已儲存的訂單</div>
-    </div>
+    <div class="cart-header" style="margin-top: 40px;">📜 已儲存分單紀錄</div>
+    <div id="orderHistory"></div>
+    
+    <button class="btn-clear-all" onclick="resetEverything()">⚠️ 清空所有數據 (重頭開始)</button>
 </div>
 
 <div class="footer-total">
     <div class="total-krw" id="totalDisplay">0 KRW</div>
-    <div class="converts" id="convDisplay">≈ 0 JPY | 0 HKD | 0 TWD</div>
     <div class="pc-hint" id="pcDisplay">還差 50,000 KRW 獲得小卡</div>
 </div>
 
 <div class="tab-bar">
-    <button class="tab-btn active" id="tabShop" onclick="switchTab('shop')">🛍️ 選購清單</button>
-    <button class="tab-btn" id="tabCart" onclick="switchTab('cart')">🧾 明細 / 分單</button>
+    <button class="tab-btn active" id="tabShop" onclick="switchTab('shop')">🛍️ 選購</button>
+    <button class="tab-btn" id="tabCart" onclick="switchTab('cart')">🧾 分單</button>
 </div>
 
 <script>
     let rates = { JPY: 0.111, HKD: 0.0057, TWD: 0.0235 };
     const players = ["DORAN", "ONER", "FAKER", "PEYZ", "KERIA"];
-    
-    const prices = {}; 
-    const qtys = {};
-    const orders = []; 
+    let prices = {}; 
+    let qtys = {};
+    let orders = []; 
 
-    // 已全面更正為 T1Klz
     const items = [
         { id: 1, name: "[LoL] 2026 T1 Uniform Jacket | 隊服外套", cat: "gen", price: 189000 }, 
-        { id: 2, name: "[RSG x T1] Amal Plushie Keychain | Amal 絨毛娃吊飾", cat: "gen" },
-        { id: 3, name: "[RSG x T1] Amal Figure Keychain | Amal 吊飾", cat: "gen" }, 
-        { id: 4, name: "[RSG x T1] Amal and ATi Desk Mat | Amal & ATi 桌墊", cat: "gen" },
-        { id: 5, name: "[RSG x T1] Amal Plushie | Amal 絨毛娃", cat: "gen" }, 
-        { id: 6, name: "Other Friends Plushie Keychain | Other Friends 愚人娃", players: true, cat: "gen" , price: 16800},
-        { id: 7, name: "Other Friends Cushion Keychain Set | 動物/愚人抱枕吊飾組", players: true, cat: "gen" , price: 12600}, 
-        { id: 8, name: "Other Friends Pin Button Set | 愚人徽章套組", players: true, cat: "gen" , price: 12600},
-        { id: 9, name: "Other Friends Acrylic Carabiner | 愚人壓克力扣環", players: true, cat: "gen" , price: 6300}, 
-        { id: 10, name: "Animal Friends Circus Pin Button | 馬戲團 徽章", players: true, cat: "gen" , price: 4800},
-        { id: 11, name: "Animal Friends Circus Ticket Keychain | 馬戲團 門票吊飾", players: true, cat: "gen", price: 9200 }, 
-        { id: 12, name: "Animal Friends Circus Acrylic Keychain | 馬戲團 壓克力吊飾", players: true, cat: "gen", price: 8200 },
-        { id: 13, name: "Animal Friends Circus Zip-Up Hoodie | 馬戲團 連帽外套/衛衣", cat: "gen" , price: 76000 }, 
-        { id: 14, name: "Animal Friends Circus T-Shirt - White | 馬戲團 T恤 (白)", cat: "gen", price: 40000 },
-        { id: 15, name: "Animal Friends Circus T-Shirt - Charcoal | 馬戲團 T恤 (炭灰)", cat: "gen", price: 40000 }, 
+        { id: 2, name: "[RSG x T1] Amal Plushie Keychain | Amal 毛絨公仔鎖匙扣", cat: "gen" },
+        { id: 3, name: "[RSG x T1] Amal Figure Keychain | Amal 模型鎖匙扣", cat: "gen" }, 
+        { id: 4, name: "[RSG x T1] Amal & ATi Desk Mat | Amal & ATi 桌墊", cat: "gen" },
+        { id: 5, name: "[RSG x T1] Amal Plushie | Amal 毛絨公仔", cat: "gen" }, 
+        { id: 6, name: "Other Friends Plushie Keychain | Other Friends 毛絨公仔鎖匙扣", players: true, cat: "gen" },
+        { id: 7, name: "Other Friends Cushion Keychain Set | 坐墊鎖匙扣套裝", players: true, cat: "gen" }, 
+        { id: 8, name: "Other Friends Pin Button Set | 襟章套裝", players: true, cat: "gen" },
+        { id: 9, name: "Other Friends Acrylic Carabiner | 亞克力扣環", players: true, cat: "gen" }, 
+        { id: 10, name: "Animal Friends Circus Pin Button | 馬戲團 襟章", players: true, cat: "gen" },
+        { id: 11, name: "Animal Friends Circus Ticket Keychain | 馬戲團 門票鎖匙扣", players: true, cat: "gen", price: 9200 }, 
+        { id: 12, name: "Animal Friends Circus Acrylic Keychain | 馬戲團 亞克力鎖匙扣", players: true, cat: "gen", price: 8200 },
+        { id: 13, name: "Animal Friends Circus Zip-Up Hoodie | 馬戲團 拉鏈衛衣", cat: "gen" }, 
+        { id: 14, name: "Animal Friends Circus T-Shirt (White) | 馬戲團 T恤 (白)", cat: "gen" },
+        { id: 15, name: "Animal Friends Circus T-Shirt (Charcoal) | 馬戲團 T恤 (炭灰)", cat: "gen" }, 
         { id: 16, name: "Animal Friends Circus Playing Cards Set | 馬戲團 撲克牌", cat: "gen", price: 16800 },
-        { id: 17, name: "Animal Friends Circus Desk Mat | 馬戲團 桌墊", cat: "gen", price: 33000 }, 
-        { id: 18, name: "Animal Friends Circus Fabric Poster | 馬戲團 布海報", cat: "gen", price: 30000 },
-        { id: 19, name: "Animal Friends Circus Keycap Set | 馬戲團 鍵帽組", cat: "gen", price: 29000 }, 
-        { id: 20, name: "Animal Friends Circus Badge Set | 馬戲團 徽章套組", cat: "gen", price: 45000 },
-        { id: 21, name: "Animal Friends Circus Diorama | 馬戲團 立牌", cat: "gen", price: 15800 }, 
-        { id: 22, name: "Animal Friends Circus Collect Book | 馬戲團 小卡收集冊", cat: "gen", price: 14800 },
-        
-        { id: 23, name: "T1 Home Ground Player T-Shirt - Doran | 主場限定 T (Doran)", cat: "hg" }, 
-        { id: 24, name: "T1 Home Ground Player T-Shirt - Oner | 主場限定 T (Oner)", cat: "hg" },
-        { id: 25, name: "T1 Home Ground Player T-Shirt - Faker | 主場限定 T (Faker)", cat: "hg" }, 
-        { id: 26, name: "T1 Home Ground Player T-Shirt - Peyz | 主場限定 T (Peyz)", cat: "hg" },
-        { id: 27, name: "T1 Home Ground Player T-Shirt - Keria | 主場限定 T (Keria)", cat: "hg" }, 
-        { id: 28, name: "T1 Home Ground Player Pin Button | 主場限定 選手徽章", players: true, cat: "hg" },
+        { id: 17, name: "Animal Friends Circus Desk Mat | 馬戲團 桌墊", cat: "gen" }, 
+        { id: 18, name: "Animal Friends Circus Fabric Poster | 馬戲團 布海報", cat: "gen" },
+        { id: 19, name: "Animal Friends Circus Keycap Set | 馬戲團 鍵帽套裝", cat: "gen" }, 
+        { id: 20, name: "Animal Friends Circus Badge Set | 馬戲團 徽章套裝", cat: "gen" },
+        { id: 21, name: "Animal Friends Circus Diorama | 馬戲團 立體場景立牌", cat: "gen", price: 15800 }, 
+        { id: 22, name: "Animal Friends Circus Collect Book | 馬戲團 小卡收集冊", cat: "gen" },
+        { id: 23, name: "T1 Home Ground Player T-Shirt - Doran | 主場限定 T恤 (Doran)", cat: "hg" }, 
+        { id: 24, name: "T1 Home Ground Player T-Shirt - Oner | 主場限定 T恤 (Oner)", cat: "hg" },
+        { id: 25, name: "T1 Home Ground Player T-Shirt - Faker | 主場限定 T恤 (Faker)", cat: "hg" }, 
+        { id: 26, name: "T1 Home Ground Player T-Shirt - Peyz | 主場限定 T恤 (Peyz)", cat: "hg" },
+        { id: 27, name: "T1 Home Ground Player T-Shirt - Keria | 主場限定 T恤 (Keria)", cat: "hg" }, 
+        { id: 28, name: "T1 Home Ground Player Pin Button | 主場限定 選手襟章", players: true, cat: "hg" },
         { id: 29, name: "T1 Home Ground Player Slogan | 主場限定 選手手幅", players: true, cat: "hg" }, 
-        { id: 30, name: "T1 Home Ground Player Fan Keychain | 主場限定 應援扇吊飾", players: true, cat: "hg" },
-        { id: 31, name: "T1 Home Ground Player Bracelet | 主場限定 選手手環", players: true, cat: "hg" }, 
+        { id: 30, name: "T1 Home Ground Player Fan Keychain | 主場限定 應援扇鎖匙扣", players: true, cat: "hg" },
+        { id: 31, name: "T1 Home Ground Player Bracelet | 主場限定 選手手繩", players: true, cat: "hg" }, 
         { id: 32, name: "T1 Home Ground T-Shirt | 主場限定 Logo T恤", cat: "hg" },
         { id: 33, name: "T1 Home Ground Bandana | 主場限定 頭巾", cat: "hg" }, 
         { id: 34, name: "T1 Home Ground Reusable Bag | 主場限定 環保袋", cat: "hg" },
-        { id: 35, name: "T1 Home Ground Pin Button Set | 主場限定 徽章套組", cat: "hg" }, 
-        { id: 36, name: "T1 Home Ground Circus T-Shirt - Pigment | 主場限定 馬戲團T恤 (水洗色)", cat: "hg" },
-        { id: 37, name: "T1 Home Ground Circus T-Shirt - White | 主場限定 馬戲團T恤 (白)", cat: "hg" },
-        
+        { id: 35, name: "T1 Home Ground Pin Button Set | 主場限定 襟章套裝", cat: "hg" }, 
+        { id: 36, name: "T1 Home Ground Circus T-Shirt (Pigment) | 主場限定 馬戲團T恤 (水洗色)", cat: "hg" },
+        { id: 37, name: "T1 Home Ground Circus T-Shirt (White) | 主場限定 馬戲團T恤 (白)", cat: "hg" },
         { id: 38, name: "T1 Picnic Mat | 野餐墊", cat: "gen" }, 
-        { id: 39, name: "T1 Picnic Stool | 野餐摺疊椅", cat: "gen" },
-        { id: 40, name: "T1 Picnic Glass Set | 野餐玻璃杯組", cat: "gen" }, 
-        { id: 41, name: "T1 Picnic Cutlery Set | 野餐餐具組", cat: "gen" },
-        { id: 42, name: "T1 Picnic Cooler Bag | 野餐保冷袋", cat: "gen" }, 
-        { id: 43, name: "T1 Mini Memory Camera | 迷你相機", cat: "gen" }, 
-        { id: 44, name: "T1 LCD Writing Tablet | 電子手寫板", cat: "gen" },
-        
-        { id: 45, name: "T1 Signature Perfume | T1 香水", cat: "pre" }, 
-        { id: 46, name: "[T1Klz] 4-Cut Photo Holder Keychain | 人生四格相框吊飾", cat: "pre" },
-        { id: 47, name: "[T1Klz] Boucle Keychain | T1Klz吊飾", players: true, cat: "pre" }, 
-        { id: 48, name: "[T1Klz] Random Comic Strip Sticker Set | T1Klz隨機漫畫貼紙", cat: "pre" },
-        { id: 49, name: "[T1Klz] Reusable Bag | T1Klz環保袋", cat: "pre" }, 
-        { id: 50, name: "[T1Klz] Deco Sticker Set | T1Klz貼紙組", cat: "pre" },
-        { id: 51, name: "[T1Klz] Photocard Stand | T1Klz小卡立牌", cat: "pre" }, 
-        { id: 52, name: "[T1 Everywhere] 2026 Plushie Keychain | 2026 全世踢娃", players: true, cat: "pre" },
-        { id: 53, name: "[T1 Everywhere] 2026 Plushie Pouch | 2026 全世踢收納包", players: true, cat: "pre" }, 
-        { id: 54, name: "2026 Happy T1 Package | 2026 happyT1 福袋", cat: "pre" },
-        { id: 55, name: "Costume Mini Friends Plushie Keychain | 動物人形娃", players: true, cat: "pre" }, 
-        { id: 56, name: "Costume Mini Friends Light Stick Cover | 動物手燈/應援棒 造型套", players: true, cat: "pre" },
-        { id: 57, name: "Costume Mini Friends Acrylic Keychain | 動物人形娃 壓克力吊飾", players: true, cat: "pre" }, 
-        { id: 58, name: "Costume Mini Friends ID Photocard Holder | 動物人形娃證件卡套", players: true, cat: "pre" },
-        { id: 59, name: "Costume Mini Friends Acrylic Photocard Stand | 動物人形娃 壓克力小卡立牌", players: true, cat: "pre" }, 
-        { id: 60, name: "Costume Mini Friends Artisan Keycap | 動物人形娃 手工鍵帽", players: true, cat: "pre" },
-        { id: 61, name: "Costume Mini Friends Soft Pin Button | 動物人形娃 軟膠徽章", players: true, cat: "pre" }, 
-        { id: 62, name: "Costume Mini Friends Cereal Bowl | 動物人形娃 麥片碗", cat: "pre" },
-        { id: 63, name: "[LoL] 2026 T1 Uniform Jersey | 2026 隊服 ", players: true, cat: "pre", price: 129000 }, 
+        { id: 39, name: "T1 Picnic Stool | 野餐摺凳", cat: "gen" },
+        { id: 40, name: "T1 Picnic Glass Set | 野餐玻璃杯套裝", cat: "gen" }, 
+        { id: 41, name: "T1 Picnic Cutlery Set | 野餐餐具套裝", cat: "gen" },
+        { id: 42, name: "T1 Picnic Cooler Bag | 野餐保溫袋", cat: "gen" }, 
+        { id: 43, name: "T1 Mini Memory Camera | 迷你記憶相機", cat: "gen" }, 
+        { id: 44, name: "T1 LCD Writing Tablet | LCD 畫板/手寫板", cat: "gen" },
+        { id: 45, name: "T1 Signature Perfume | T1 專屬香水", cat: "pre" }, 
+        { id: 46, name: "[T1Kiz] 4-Cut Photo Holder Keychain | 人生四格相框鎖匙扣", cat: "pre" },
+        { id: 47, name: "[T1Kiz] Boucle Keychain | 毛巾布鎖匙扣", players: true, cat: "pre" }, 
+        { id: 48, name: "[T1Kiz] Random Comic Strip Sticker | 隨機漫畫貼紙", cat: "pre" },
+        { id: 49, name: "[T1Kiz] Reusable Bag | 環保袋", cat: "pre" }, 
+        { id: 50, name: "[T1Kiz] Deco Sticker Set | 裝飾貼紙套裝", cat: "pre" },
+        { id: 51, name: "[T1Kiz] Photocard Stand | 小卡立牌", cat: "pre" }, 
+        { id: 52, name: "[T1 Everywhere] 2026 Plushie Keychain | 2026 毛絨公仔鎖匙扣", players: true, cat: "pre" },
+        { id: 53, name: "[T1 Everywhere] 2026 Plushie Pouch | 2026 毛絨小袋", players: true, cat: "pre" }, 
+        { id: 54, name: "2026 Happy T1 Package | 2026 快樂 T1 福袋", cat: "pre" },
+        { id: 55, name: "Costume Mini Friends Plushie Keychain | 變裝迷你 毛絨鎖匙扣", players: true, cat: "pre" }, 
+        { id: 56, name: "Costume Mini Friends Light Stick Cover | 變裝迷你 應援棒保護套", players: true, cat: "pre" },
+        { id: 57, name: "Costume Mini Friends Acrylic Keychain | 變裝迷你 亞克力鎖匙扣", players: true, cat: "pre" }, 
+        { id: 58, name: "Costume Mini Friends ID Photocard Holder | 變裝迷你 卡套/證件套", players: true, cat: "pre" },
+        { id: 59, name: "Costume Mini Friends Acrylic Photocard Stand | 變裝迷你 亞克力小卡立牌", players: true, cat: "pre" }, 
+        { id: 60, name: "Costume Mini Friends Artisan Keycap | 變裝迷你 手工鍵帽", players: true, cat: "pre" },
+        { id: 61, name: "Costume Mini Friends Soft Pin Button | 變裝迷你 軟身襟章", players: true, cat: "pre" }, 
+        { id: 62, name: "Costume Mini Friends Cereal Bowl | 變裝迷你 麥片碗", cat: "pre" },
+        { id: 63, name: "[LoL] 2026 T1 Uniform Jersey | 2026 隊服 (短袖)", players: true, cat: "pre", price: 129000 }, 
         { id: 64, name: "2026 T1 Uniform Pants | 2026 隊服長褲", players: true, cat: "pre", price: 99000 },
-        { id: 65, name: "Shopping bag_Large | 購物袋 (大)", cat: "pre" }, 
-        { id: 66, name: "Shopping bag_small | 購物袋 (小)", cat: "pre" }
+        { id: 65, name: "Shopping bag (Large) | 購物袋 (大)", cat: "pre" }, 
+        { id: 66, name: "Shopping bag (Small) | 購物袋 (小)", cat: "pre" }
     ];
+
+    function saveToStorage() {
+        const data = { prices, qtys, orders };
+        localStorage.setItem('t1_cart_v13', JSON.stringify(data));
+    }
+
+    function loadFromStorage() {
+        const saved = localStorage.getItem('t1_cart_v13');
+        if (saved) {
+            const d = JSON.parse(saved);
+            prices = d.prices || {};
+            qtys = d.qtys || {};
+            orders = d.orders || [];
+        } else {
+            items.forEach(i => { if(i.price) prices[i.id] = i.price; });
+        }
+    }
 
     async function getRates() {
         try {
@@ -199,10 +201,10 @@
             rates = { JPY: d.rates.JPY, HKD: d.rates.HKD, TWD: d.rates.TWD };
             document.getElementById('rateBar').innerText = `1k KRW ≈ ${Math.round(rates.JPY*1000)} JPY | ${Math.round(rates.HKD*1000,1)} HKD | ${Math.round(rates.TWD*1000,1)} TWD`;
         } catch(e) {}
-        calcTotal();
     }
 
     function initShop() {
+        loadFromStorage();
         const app = document.getElementById('shopView');
         const sections = [ { key: 'hg', title: '🎪 HOMEGROUND EXCLUSIVE', class: 'cat-hg' }, { key: 'pre', title: '🛍️ PRE-PURCHASE EXCLUSIVE', class: 'cat-pre' }, { key: 'gen', title: '🛒 GENERAL MERCHANDISE', class: 'cat-general' } ];
         let html = "";
@@ -212,67 +214,62 @@
             html += `</div>`;
         });
         app.innerHTML = html;
+        calcTotal(); renderCart(); renderOrderHistory();
     }
 
     function createRow(item) {
-        prices[item.id] = item.price || 0;
-        const displayPrice = item.price ? item.price : ""; 
-
+        const currentP = prices[item.id] || "";
         let controlsHTML = '';
         if (!item.players) {
-            qtys[item.id] = 0;
-            controlsHTML = `<div class="qty-box"><button class="qty-btn" onclick="updateQty('${item.id}', -1, ${item.id})">-</button><input type="number" class="qty-input" id="qty-${item.id}" value="0" readonly><button class="qty-btn" onclick="updateQty('${item.id}', 1, ${item.id})">+</button></div>`;
+            const q = qtys[item.id] || 0;
+            controlsHTML = `<div class="qty-box"><button class="qty-btn" onclick="updateQty('${item.id}', -1, ${item.id})">-</button><input type="number" class="qty-input" id="qty-${item.id}" value="${q}" readonly><button class="qty-btn" onclick="updateQty('${item.id}', 1, ${item.id})">+</button></div>`;
         }
         
-        let html = `<div class="item-row" id="row-${item.id}">
+        let rowClass = (item.players ? players.some(p => qtys[`${item.id}-${p}`] > 0) : qtys[item.id] > 0) ? "item-row active" : "item-row";
+
+        let html = `<div class="${rowClass}" id="row-${item.id}">
                 <div class="item-top"><div class="item-info"><div class="item-id">#${item.id.toString().padStart(2, '0')}</div><div class="item-name">${item.name}</div></div>
-                <div style="display:flex; gap:10px;"><input type="number" class="price-input" value="${displayPrice}" placeholder="₩ 價格" oninput="updatePrice(${item.id}, this.value)">${controlsHTML}</div></div>`;
+                <div style="display:flex; gap:8px;"><input type="number" class="price-input" id="price-${item.id}" value="${currentP}" placeholder="₩ 價格" oninput="updatePrice(${item.id}, this.value)">${controlsHTML}</div></div>`;
 
         if (item.players) {
             html += `<div class="player-list">`;
             players.forEach(p => {
-                const key = `${item.id}-${p}`; qtys[key] = 0;
-                html += `<div class="player-row" id="prow-${key}"><div class="player-name">${p}</div><div class="qty-box"><button class="qty-btn" onclick="updateQty('${key}', -1, ${item.id})">-</button><input type="number" class="qty-input" id="qty-${key}" value="0" readonly><button class="qty-btn" onclick="updateQty('${key}', 1, ${item.id})">+</button></div></div>`;
+                const key = `${item.id}-${p}`;
+                const q = qtys[key] || 0;
+                html += `<div class="player-row ${q>0?'active':''}" id="prow-${key}"><div class="player-name">${p}</div><div class="qty-box"><button class="qty-btn" onclick="updateQty('${key}', -1, ${item.id})">-</button><input type="number" class="qty-input" id="qty-${key}" value="${q}" readonly><button class="qty-btn" onclick="updateQty('${key}', 1, ${item.id})">+</button></div></div>`;
             });
             html += `</div>`;
         }
         return html + `</div>`;
     }
 
-    function updatePrice(id, val) { prices[id] = parseInt(val) || 0; calcTotal(); renderCart(); }
+    function updatePrice(id, val) { prices[id] = parseInt(val) || 0; saveToStorage(); calcTotal(); renderCart(); }
     
     function updateQty(key, delta, parentId) {
-        let newQty = Math.max(0, qtys[key] + delta);
-        qtys[key] = newQty;
-        document.getElementById(`qty-${key}`).value = newQty;
+        qtys[key] = Math.max(0, (qtys[key] || 0) + delta);
+        document.getElementById(`qty-${key}`).value = qtys[key];
         
         const prow = document.getElementById(`prow-${key}`);
-        if(prow) { newQty > 0 ? prow.classList.add('active') : prow.classList.remove('active'); }
+        if(prow) qtys[key] > 0 ? prow.classList.add('active') : prow.classList.remove('active');
         
         const item = items.find(i => i.id === parentId);
         let anyActive = item.players ? players.some(p => qtys[`${parentId}-${p}`] > 0) : qtys[parentId] > 0;
-        const row = document.getElementById(`row-${parentId}`);
-        anyActive ? row.classList.add('active') : row.classList.remove('active');
+        document.getElementById(`row-${parentId}`).classList.toggle('active', anyActive);
         
-        calcTotal(); renderCart();
+        saveToStorage(); calcTotal(); renderCart();
     }
 
     function calcTotal() {
         let total = 0;
         items.forEach(item => {
             const p = prices[item.id] || 0;
-            if (item.players) { players.forEach(player => { total += p * qtys[`${item.id}-${player}`]; }); } 
-            else { total += p * qtys[item.id]; }
+            if (item.players) players.forEach(player => total += p * (qtys[`${item.id}-${player}`] || 0));
+            else total += p * (qtys[item.id] || 0);
         });
-        
         document.getElementById('totalDisplay').innerText = total.toLocaleString() + ' KRW';
-        document.getElementById('convDisplay').innerText = `≈ ${Math.round(total*rates.JPY).toLocaleString()} JPY | ${Math.round(total*rates.HKD).toLocaleString()} HKD | ${Math.round(total*rates.TWD).toLocaleString()} TWD`;
-        
         const count = Math.floor(total / 50000);
-        const next = 50000 - (total % 50000);
         const pcEl = document.getElementById('pcDisplay');
-        if(count > 0) { pcEl.innerText = `✨ 達成！可獲 ${count} 張小卡 (差 ${next.toLocaleString()} 多一張)`; pcEl.style.backgroundColor = '#FFD700'; pcEl.style.color = '#000'; } 
-        else { pcEl.innerText = `還差 ${next.toLocaleString()} KRW 獲得小卡`; pcEl.style.backgroundColor = '#E0E0E0'; pcEl.style.color = '#666'; }
+        pcEl.innerText = count > 0 ? `✨ 達成！可獲 ${count} 張小卡 (差 ${(50000 - total % 50000).toLocaleString()} 多一張)` : `還差 ${(50000 - total).toLocaleString()} KRW 獲得小卡`;
         return { total, count };
     }
 
@@ -281,13 +278,12 @@
         document.getElementById('cartView').style.display = tab === 'cart' ? 'block' : 'none';
         document.getElementById('tabShop').classList.toggle('active', tab === 'shop');
         document.getElementById('tabCart').classList.toggle('active', tab === 'cart');
-        if(tab === 'cart') renderCart();
+        if(tab === 'cart') { renderCart(); renderOrderHistory(); }
     }
 
     function renderCart() {
         const cartContent = document.getElementById('cartContent');
         let html = ""; let hasItems = false;
-        
         items.forEach(item => {
             const p = prices[item.id] || 0;
             if (item.players) {
@@ -295,19 +291,15 @@
                     const q = qtys[`${item.id}-${player}`];
                     if(q > 0) {
                         hasItems = true;
-                        html += `<div class="cart-item"><div><div class="cart-item-name">#${item.id.toString().padStart(2,'0')} ${item.name} [${player}]</div><div class="cart-item-meta">${p.toLocaleString()} KRW × ${q}</div></div><div style="font-weight:900; color:#D9384A;">${(p*q).toLocaleString()} KRW</div></div>`;
+                        html += `<div class="cart-item"><div><div class="cart-item-name">${item.name} [${player}]</div><div class="cart-item-meta">₩${p.toLocaleString()} × ${q}</div></div><div style="font-weight:900; color:#D9384A;">${(p*q).toLocaleString()}</div></div>`;
                     }
                 });
-            } else {
-                const q = qtys[item.id];
-                if(q > 0) {
-                    hasItems = true;
-                    html += `<div class="cart-item"><div><div class="cart-item-name">#${item.id.toString().padStart(2,'0')} ${item.name}</div><div class="cart-item-meta">${p.toLocaleString()} KRW × ${q}</div></div><div style="font-weight:900; color:#D9384A;">${(p*q).toLocaleString()} KRW</div></div>`;
-                }
+            } else if(qtys[item.id] > 0) {
+                hasItems = true;
+                html += `<div class="cart-item"><div><div class="cart-item-name">${item.name}</div><div class="cart-item-meta">₩${p.toLocaleString()} × ${qtys[item.id]}</div></div><div style="font-weight:900; color:#D9384A;">${(p*qtys[item.id]).toLocaleString()}</div></div>`;
             }
         });
-        
-        cartContent.innerHTML = hasItems ? html : `<div class="cart-empty">尚未加入任何周邊商品 🐧</div>`;
+        cartContent.innerHTML = hasItems ? html : `<div style="text-align:center; padding:30px; color:#888;">購物車空空如也 🐧<br><span style="font-size:12px;">多買多享受喔</span></div>`;
         document.getElementById('saveBtn').style.display = hasItems ? 'block' : 'none';
     }
 
@@ -316,53 +308,32 @@
         let orderItems = [];
         items.forEach(item => {
             const p = prices[item.id] || 0;
-            if (item.players) {
-                players.forEach(player => {
-                    const q = qtys[`${item.id}-${player}`];
-                    if(q > 0) orderItems.push(`#${item.id.toString().padStart(2,'0')} ${item.name} [${player}] (₩${p.toLocaleString()}) × ${q}`);
-                });
-            } else {
-                if(qtys[item.id] > 0) orderItems.push(`#${item.id.toString().padStart(2,'0')} ${item.name} (₩${p.toLocaleString()}) × ${qtys[item.id]}`);
-            }
+            if (item.players) players.forEach(player => { if(qtys[`${item.id}-${player}`] > 0) orderItems.push(`${item.name} [${player}] (₩${p.toLocaleString()}) × ${qtys[`${item.id}-${player}`]}`); });
+            else if(qtys[item.id] > 0) orderItems.push(`${item.name} (₩${p.toLocaleString()}) × ${qtys[item.id]}`);
         });
-        
         orders.push({ id: Date.now(), total, count, items: orderItems });
-        
-        for(let key in qtys) qtys[key] = 0;
+        Object.keys(qtys).forEach(k => qtys[k] = 0);
         document.querySelectorAll('.qty-input').forEach(el => el.value = 0);
         document.querySelectorAll('.item-row, .player-row').forEach(el => el.classList.remove('active'));
-        
-        renderCart(); calcTotal(); renderOrderHistory();
-        alert(`✅ 成功儲存訂單！購物車已清空。`);
+        saveToStorage(); renderCart(); calcTotal(); renderOrderHistory();
+        alert("✅ 訂單已儲存！");
     }
 
     function renderOrderHistory() {
-        const historyDiv = document.getElementById('orderHistory');
-        if(orders.length === 0) {
-            historyDiv.innerHTML = `<div style="text-align:center; color:#888; font-size:12px; margin-top:20px;">暫無已儲存的訂單</div>`;
-            return;
-        }
-        
+        const div = document.getElementById('orderHistory');
+        if(orders.length === 0) { div.innerHTML = `<div style="text-align:center; color:#888; font-size:12px; padding:20px;">暫無紀錄</div>`; return; }
         let html = "";
-        orders.forEach((o, index) => {
-            html += `<div class="order-history-card">
-                        <div class="order-title">
-                            <span>📦 訂單 ${index + 1} <br><span style="font-size:12px; color:#D9384A;">共 ${o.total.toLocaleString()} KRW | 獲得 ${o.count} 張小卡</span></span>
-                            <button onclick="deleteOrder(${o.id})" style="background:transparent; border:none; font-size:18px; cursor:pointer; padding:0;">🗑️</button>
-                        </div>`;
-            o.items.forEach(line => { html += `<div class="order-item-line">${line}</div>`; });
+        orders.forEach((o, idx) => {
+            html += `<div class="order-history-card"><div class="order-title" style="display:flex; justify-content:space-between;"><span>📦 訂單 ${idx+1} <br><small>共 ${o.total.toLocaleString()} KRW | ${o.count} 小卡</small></span><button onclick="deleteOrder(${o.id})" style="background:none; border:none; font-size:18px;">🗑️</button></div>`;
+            o.items.forEach(line => html += `<div class="order-item-line">${line}</div>`);
             html += `</div>`;
         });
-        historyDiv.innerHTML = html;
+        div.innerHTML = html;
     }
 
-    function deleteOrder(id) {
-        const index = orders.findIndex(o => o.id === id);
-        if (index > -1) {
-            orders.splice(index, 1);
-            renderOrderHistory();
-        }
-    }
+    function deleteOrder(id) { orders = orders.filter(o => o.id !== id); saveToStorage(); renderOrderHistory(); }
+    
+    function resetEverything() { if(confirm("確定要清空所有已輸入的價格、數量和訂單紀錄嗎？")) { localStorage.removeItem('t1_cart_v13'); location.reload(); } }
 
     getRates(); initShop();
 </script>
