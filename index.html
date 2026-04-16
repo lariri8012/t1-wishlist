@@ -3,40 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T1 HG Wishlist v3.0</title>
+    <title>T1 HG Wishlist v3.1</title>
     <style>
         :root { 
             --t1-red: #D9384A; --t1-charcoal: #2D2D2D; --bg-color: #F8F9FA; --card-bg: #FFFFFF; 
-            --cat-hg-bg: #FFF0F2; --cat-hg-border: #FFB3C1;
-            --cat-pre-bg: #F0F7FF; --cat-pre-border: #A3CFFF;
-            --cat-gen-bg: #F0F0F0; --cat-gen-border: #CCCCCC;
+            --cat-hg-bg: #FFF0F2; --cat-pre-bg: #F0F7FF; --cat-gen-bg: #F0F0F0;
         }
-        
-        body { background: var(--bg-color); color: var(--t1-charcoal); font-family: -apple-system, sans-serif; margin: 0; padding: 15px; padding-bottom: 240px; }
+        body { background: var(--bg-color); color: var(--t1-charcoal); font-family: -apple-system, sans-serif; margin: 0; padding: 15px; padding-bottom: 260px; }
         
         .header { text-align: center; padding: 20px 0; border-bottom: 4px solid var(--t1-red); position: sticky; top: 0; background: var(--bg-color); z-index: 1000; }
-        .header h1 { margin:0; font-size: 22px; font-weight: 900; letter-spacing: 1px; color: var(--t1-charcoal); }
+        .header h1 { margin:0; font-size: 20px; font-weight: 900; letter-spacing: 1px; }
         .header p { margin: 5px 0 0 0; font-size: 11px; color: #888; font-weight: bold; }
         
+        .btn-refresh { background: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 15px; padding: 4px 12px; font-size: 10px; font-weight: bold; color: var(--t1-red); cursor: pointer; margin-top: 8px; }
         .currency-bar { background: var(--card-bg); padding: 12px; border-radius: 12px; font-size: 12px; margin: 15px 0; text-align: center; font-weight: bold; border: 2px solid #E0E0E0; color: #666; }
+
+        /* 摺疊標題樣式 */
+        .category-section { margin-top: 15px; border-radius: 16px; overflow: hidden; border: 2px solid transparent; }
         
-        .category-section { margin-top: 35px; border-radius: 16px; border: 3px solid; padding: 15px 10px; }
-        .category-title { font-size: 14px; font-weight: 900; margin: -30px 0 15px 10px; display: inline-block; padding: 6px 16px; border-radius: 20px; }
+        .category-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 20px; font-size: 15px; font-weight: 900; cursor: pointer;
+            transition: all 0.2s;
+        }
         
-        .cat-hg { border-color: var(--cat-hg-border); background: var(--cat-hg-bg); } .cat-hg .category-title { background: var(--t1-red); color: white; }
-        .cat-pre { border-color: var(--cat-pre-border); background: var(--cat-pre-bg); } .cat-pre .category-title { background: #3b82f6; color: white; }
-        .cat-general { border-color: var(--cat-gen-border); background: var(--cat-gen-bg); } .cat-general .category-title { background: #888; color: white; }
-        
-        .item-row { background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 12px; display: flex; flex-direction: column; border: 2px solid transparent; opacity: 0.6; transform: scale(0.98); transition: all 0.2s ease; }
+        .cat-hg { border-color: #FFB3C1; } 
+        .cat-hg .category-header { background: var(--t1-red); color: white; }
+        .cat-pre { border-color: #A3CFFF; } 
+        .cat-pre .category-header { background: #3b82f6; color: white; }
+        .cat-gen { border-color: #CCCCCC; } 
+        .cat-gen .category-header { background: #666; color: white; }
+
+        .arrow-icon { font-size: 12px; transition: transform 0.3s; }
+        .is-collapsed .arrow-icon { transform: rotate(-90deg); }
+
+        .category-content { padding: 10px; transition: max-height 0.3s ease-out; }
+        .category-content.collapsed { display: none; }
+
+        /* 商品列樣式 */
+        .item-row { background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 12px; display: flex; flex-direction: column; border: 2px solid transparent; opacity: 0.6; transform: scale(0.98); transition: all 0.2s; }
         .item-row.active { opacity: 1; transform: scale(1); border: 2px solid var(--t1-red); box-shadow: 0 4px 12px rgba(217, 56, 74, 0.15); }
-        
         .item-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-        .item-info { flex: 1; padding-right: 10px; }
-        .item-id { font-size: 11px; font-weight: 900; color: var(--t1-red); margin-bottom: 2px; }
-        .item-name { font-size: 14px; font-weight: bold; line-height: 1.4; color: var(--t1-charcoal); }
-        
         .price-input { background: #F5F5F5; border: 2px solid #E0E0E0; color: var(--t1-charcoal); padding: 8px 10px; border-radius: 10px; width: 85px; font-size: 13px; font-weight: bold; text-align: center; outline: none; }
-        .price-input:focus { border-color: var(--t1-red); background: #FFF; }
         .qty-box { display: flex; align-items: center; background: #F5F5F5; border: 2px solid #E0E0E0; border-radius: 20px; padding: 2px; width: 90px; justify-content: space-between; }
         .qty-btn { background: #E0E0E0; color: var(--t1-charcoal); border: none; width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; }
         .qty-input { background: transparent; border: none; color: var(--t1-charcoal); width: 26px; text-align: center; font-size: 14px; font-weight: bold; outline: none; }
@@ -44,29 +52,18 @@
         .player-list { background: #F8F9FA; border-radius: 10px; border: 1px solid #E0E0E0; overflow: hidden; margin-top: 5px; }
         .player-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid #EBEBEB; }
         .player-row.active { background: #FFF0F2; }
-        .player-name { font-size: 13px; font-weight: bold; color: #555; }
-        
-        #cartView { display: none; }
-        .cart-header { font-size: 18px; font-weight: 900; margin: 20px 0 10px; padding-bottom: 10px; border-bottom: 2px solid #E0E0E0; display: flex; justify-content: space-between; align-items: center; }
+
+        /* 購物車 & 總計 */
         .cart-item { background: var(--card-bg); padding: 12px 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #E0E0E0; display: flex; justify-content: space-between; align-items: center; }
-        .cart-item-name { font-size: 13px; font-weight: bold; margin-bottom: 4px; }
-        .cart-item-meta { font-size: 11px; color: #888; }
-        
-        .btn-save-order { background: var(--t1-red); color: white; border: none; padding: 15px; border-radius: 12px; width: 100%; font-size: 16px; font-weight: bold; margin-top: 20px; cursor: pointer; box-shadow: 0 4px 10px rgba(217, 56, 74, 0.3); }
-        .btn-clear-all { background: #666; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; margin-top: 50px; width: 100%; opacity: 0.7; }
-        
         .order-history-card { background: #FFF0F2; border: 2px solid #FFB3C1; padding: 15px; border-radius: 12px; margin-top: 15px; }
-        .order-title { font-weight: 900; color: var(--t1-red); margin-bottom: 10px; font-size: 14px; }
-        .order-item-line { font-size: 12px; color: #555; margin-bottom: 4px; border-bottom: 1px dashed #FFD6DE; padding-bottom: 4px; }
+        .order-title { font-weight: 900; color: var(--t1-red); margin-bottom: 10px; font-size: 14px; cursor: pointer; text-decoration: underline dotted; }
+        .order-item-line { font-size: 11px; color: #555; margin-bottom: 4px; border-bottom: 1px dashed #FFD6DE; padding-bottom: 4px; }
         
         .footer-total { position: fixed; bottom: 65px; left: 0; right: 0; background: var(--card-bg); border-top: 3px solid var(--t1-red); padding: 10px 15px; text-align: center; z-index: 999; }
-        .total-krw { font-size: 24px; font-weight: 900; color: var(--t1-red); }
-        .converts { font-size: 12px; color: #888; margin-top: 4px; font-weight: bold; }
-        .pc-hint { font-size: 11px; margin-top: 8px; color: #000; background: #FFD700; padding: 4px 12px; border-radius: 20px; display: inline-block; font-weight: bold; }
-        
         .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #2D2D2D; display: flex; height: 65px; z-index: 1000; }
         .tab-btn { flex: 1; background: transparent; color: #888; border: none; font-size: 15px; font-weight: bold; cursor: pointer; }
         .tab-btn.active { color: white; background: var(--t1-red); }
+        .summary-box { background: #2D2D2D; color: white; padding: 20px; border-radius: 16px; margin: 30px 0; text-align: center; }
     </style>
 </head>
 <body>
@@ -74,43 +71,46 @@
 <div class="header">
     <h1>T1 HG獻金大計 🐿️🐯🐈‍⬛🐨🐶</h1>
     <p>①想就是買 ②不買會後悔</p>
-    <p style="margin-top: 8px; color: #D9384A; font-size: 10px;">V3.0 | 使用最新版請手動刷新網頁</p>
+    <button class="btn-refresh" onclick="forceRefresh()">🔄 檢查更新 / 刷新</button>
 </div>
 
-<div class="currency-bar" id="rateBar">更新匯率中...</div>
+<div class="currency-bar" id="rateBar">正在獲取最新匯率...</div>
 
-<div id="shopView"></div>
+<div id="shopView">
+    <div id="shopContent"></div>
+    <button onclick="resetCurrentSelection()" style="background:#E0E0E0; color:#666; border:none; padding:12px; border-radius:12px; width:100%; margin-top:25px; font-size:13px; font-weight:bold; cursor:pointer;">🔄 清空當前選擇 (不影響已存單據)</button>
+</div>
 
-<div id="cartView">
-    <div class="cart-header">🛒 購物車明細</div>
+<div id="cartView" style="display:none;">
+    <div style="font-size: 18px; font-weight: 900; margin: 20px 0 10px;">🛒 購物車明細</div>
     <div id="cartContent"></div>
-    <button class="btn-save-order" onclick="saveOrder()" id="saveBtn" style="display:none;">📦 儲存為新訂單 (結算並清空)</button>
+    <button id="saveBtn" onclick="saveOrder()" style="background:var(--t1-red); color:white; border:none; padding:15px; border-radius:12px; width:100%; font-size:16px; font-weight:bold; margin-top:20px; display:none;">📦 儲存為新訂單</button>
     
-    <div class="cart-header" style="margin-top: 40px;">📜 已儲存分單紀錄</div>
+    <div style="font-size: 18px; font-weight: 900; margin-top: 40px; margin-bottom: 10px;">📜 已儲存分單紀錄 (點擊標題可改名)</div>
     <div id="orderHistory"></div>
+    <div id="allOrdersSummary"></div>
     
-    <button class="btn-clear-all" onclick="resetEverything()">⚠️ 清空所有數據 (重頭開始)</button>
+    <button onclick="resetEverything()" style="background:#666; color:white; border:none; padding:10px; border-radius:8px; font-size:12px; margin-top:50px; width:100%; opacity:0.7;">⚠️ 清空所有數據</button>
 </div>
 
 <div class="footer-total">
-    <div class="total-krw" id="totalDisplay">0 KRW</div>
-    <div id="convDisplay" class="converts">≈ 0 JPY | 0 HKD | 0 TWD</div>
-    <div class="pc-hint" id="pcDisplay">還差 50,000 KRW 獲得小卡</div>
+    <div style="font-size:24px; font-weight:900; color:var(--t1-red);" id="totalDisplay">0 KRW</div>
+    <div style="font-size:11px; color:#888; margin-top:2px; font-weight:bold;" id="convDisplay">≈ 0 JPY | 0 HKD | 0 TWD</div>
+    <div id="pcDisplay" style="font-size:11px; margin-top:8px; color:#000; background:#FFD700; padding:4px 12px; border-radius:20px; display:inline-block; font-weight:bold;">還差 50,000 KRW 獲得小卡</div>
 </div>
 
 <div class="tab-bar">
     <button class="tab-btn active" id="tabShop" onclick="switchTab('shop')">🛍️ 選購</button>
-    <button class="tab-btn" id="tabCart" onclick="switchTab('cart')">🧾 分單</button>
+    <button class="tab-btn" id="tabCart" onclick="switchTab('cart')">🧾 分單明細</button>
 </div>
 
 <script>
-    let rates = { JPY: 0.111, HKD: 0.0057, TWD: 0.0235 };
-    const players = ["DORAN", "ONER", "FAKER", "PEYZ", "KERIA"];
-    let prices = {}; 
-    let qtys = {};
-    let orders = []; 
+    const CURRENT_VERSION = "20260416-V3-1"; 
 
-     const items = [
+    let rates = { JPY: 0.111, HKD: 0.0057, TWD: 0.0235 };
+    let prices = {}; let qtys = {}; let orders = [];
+    const players = ["DORAN", "ONER", "FAKER", "PEYZ", "KERIA"];
+    const items = [
         { id: 1, name: "[LoL] 2026 T1 Uniform Jacket | 隊服外套", cat: "gen", price: 189000 }, 
         { id: 2, name: "[RSG x T1] Amal Plushie Keychain | Amal 絨毛娃吊飾", cat: "gen" },
         { id: 3, name: "[RSG x T1] Amal Figure Keychain | Amal 吊飾", cat: "gen" }, 
@@ -182,86 +182,95 @@
         { id: 66, name: "Shopping bag_small | 購物袋 (小)", cat: "pre" }
     ];
 
-    function saveToStorage() {
-        const data = { prices, qtys, orders };
-        localStorage.setItem('t1_cart_v13', JSON.stringify(data));
-    }
-
-    function loadFromStorage() {
-        const saved = localStorage.getItem('t1_cart_v13');
-        if (saved) {
-            const d = JSON.parse(saved);
-            prices = d.prices || {};
-            qtys = d.qtys || {};
-            orders = d.orders || [];
-        } else {
-            items.forEach(i => { if(i.price) prices[i.id] = i.price; });
-        }
-    }
-
     async function getRates() {
         try {
             const r = await fetch('https://open.er-api.com/v6/latest/KRW');
             const d = await r.json();
             rates = { JPY: d.rates.JPY, HKD: d.rates.HKD, TWD: d.rates.TWD };
             document.getElementById('rateBar').innerText = `1k KRW ≈ ${Math.round(rates.JPY*1000)} JPY | ${Math.round(rates.HKD*1000,1)} HKD | ${Math.round(rates.TWD*1000,1)} TWD`;
-            calcTotal(); // 獲取匯率後重算一次
-        } catch(e) {}
+        } catch(e) { document.getElementById('rateBar').innerText = "匯率獲取失敗，使用預設值"; }
+        calcTotal();
+    }
+
+    function saveToStorage() { localStorage.setItem('t1_cart_v14_3', JSON.stringify({ version: CURRENT_VERSION, prices, qtys, orders })); }
+    
+    function loadFromStorage() {
+        const saved = localStorage.getItem('t1_cart_v14_3');
+        if (saved) { 
+            const d = JSON.parse(saved);
+            prices = d.prices || {}; qtys = d.qtys || {}; orders = d.orders || [];
+            if (d.version !== CURRENT_VERSION) {
+                items.forEach(i => { if(i.price) prices[i.id] = i.price; });
+                saveToStorage(); 
+            }
+        } else {
+            items.forEach(i => { if(i.price) prices[i.id] = i.price; });
+        }
     }
 
     function initShop() {
         loadFromStorage();
-        const app = document.getElementById('shopView');
-        const sections = [ { key: 'hg', title: '🎪 HOMEGROUND EXCLUSIVE', class: 'cat-hg' }, { key: 'pre', title: '🛍️ PRE-PURCHASE EXCLUSIVE', class: 'cat-pre' }, { key: 'gen', title: '🛒 GENERAL MERCHANDISE', class: 'cat-general' } ];
+        const container = document.getElementById('shopContent');
+        const sections = [
+            {key:'hg', title:'🎪 主場限定 (HOMEGROUND)', class:'cat-hg'}, 
+            {key:'pre', title:'🛍️ 官網預售 (PRE-PURCHASE)', class:'cat-pre'}, 
+            {key:'gen', title:'🛒 常規周邊 (GENERAL)', class:'cat-gen'}
+        ];
+        
         let html = "";
         sections.forEach(sec => {
-            html += `<div class="category-section ${sec.class}"><div class="category-title">${sec.title}</div>`;
-            items.filter(item => item.cat === sec.key).forEach(item => { html += createRow(item); });
-            html += `</div>`;
+
+            let isCollapsed = (sec.key !== 'pre'); 
+            
+            html += `<div class="category-section ${sec.class}">
+                        <div class="category-header ${isCollapsed ? 'is-collapsed' : ''}" onclick="toggleCategory('${sec.key}', this)">
+                            <span>${sec.title}</span>
+                            <span class="arrow-icon">▼</span>
+                        </div>
+                        <div id="content-${sec.key}" class="category-content ${isCollapsed ? 'collapsed' : ''}">`;
+            
+            items.filter(i => i.cat === sec.key).forEach(item => {
+                const currentP = prices[item.id] || "";
+                let rowActive = item.players ? players.some(p => qtys[`${item.id}-${p}`] > 0) : (qtys[item.id] > 0);
+                html += `<div class="item-row ${rowActive?'active':''}" id="row-${item.id}">
+                            <div class="item-top">
+                                <div><div style="font-size:11px; font-weight:900; color:var(--t1-red);">#${item.id.toString().padStart(2,'0')}</div><div style="font-size:14px; font-weight:bold;">${item.name}</div></div>
+                                <div style="display:flex; gap:8px;"><input type="number" class="price-input" id="price-${item.id}" value="${currentP}" placeholder="₩ 價格" oninput="updatePrice(${item.id}, this.value)">`;
+                if(!item.players) {
+                    const q = qtys[item.id] || 0;
+                    html += `<div class="qty-box"><button class="qty-btn" onclick="updateQty('${item.id}', -1, ${item.id})">-</button><input type="number" class="qty-input" id="qty-${item.id}" value="${q}" readonly><button class="qty-btn" onclick="updateQty('${item.id}', 1, ${item.id})">+</button></div>`;
+                }
+                html += `</div></div>`;
+                if(item.players) {
+                    html += `<div class="player-list">`;
+                    players.forEach(p => {
+                        const q = qtys[`${item.id}-${p}`] || 0;
+                        html += `<div class="player-row ${q>0?'active':''}" id="prow-${item.id}-${p}"><div style="font-size:13px; font-weight:bold;">${p}</div><div class="qty-box"><button class="qty-btn" onclick="updateQty('${item.id}-${p}', -1, ${item.id})">-</button><input type="number" class="qty-input" id="qty-${item.id}-${p}" value="${q}" readonly><button class="qty-btn" onclick="updateQty('${item.id}-${p}', 1, ${item.id})">+</button></div></div>`;
+                    });
+                    html += `</div>`;
+                }
+                html += `</div>`;
+            });
+            html += `</div></div>`;
         });
-        app.innerHTML = html;
-        calcTotal(); renderCart(); renderOrderHistory();
+        container.innerHTML = html;
+        getRates();
     }
 
-    function createRow(item) {
-        const currentP = prices[item.id] || "";
-        let controlsHTML = '';
-        if (!item.players) {
-            const q = qtys[item.id] || 0;
-            controlsHTML = `<div class="qty-box"><button class="qty-btn" onclick="updateQty('${item.id}', -1, ${item.id})">-</button><input type="number" class="qty-input" id="qty-${item.id}" value="${q}" readonly><button class="qty-btn" onclick="updateQty('${item.id}', 1, ${item.id})">+</button></div>`;
-        }
-        
-        let rowClass = (item.players ? players.some(p => qtys[`${item.id}-${p}`] > 0) : qtys[item.id] > 0) ? "item-row active" : "item-row";
-
-        let html = `<div class="${rowClass}" id="row-${item.id}">
-                <div class="item-top"><div class="item-info"><div class="item-id">#${item.id.toString().padStart(2, '0')}</div><div class="item-name">${item.name}</div></div>
-                <div style="display:flex; gap:8px;"><input type="number" class="price-input" id="price-${item.id}" value="${currentP}" placeholder="₩ 價格" oninput="updatePrice(${item.id}, this.value)">${controlsHTML}</div></div>`;
-
-        if (item.players) {
-            html += `<div class="player-list">`;
-            players.forEach(p => {
-                const key = `${item.id}-${p}`;
-                const q = qtys[key] || 0;
-                html += `<div class="player-row ${q>0?'active':''}" id="prow-${key}"><div class="player-name">${p}</div><div class="qty-box"><button class="qty-btn" onclick="updateQty('${key}', -1, ${item.id})">-</button><input type="number" class="qty-input" id="qty-${key}" value="${q}" readonly><button class="qty-btn" onclick="updateQty('${key}', 1, ${item.id})">+</button></div></div>`;
-            });
-            html += `</div>`;
-        }
-        return html + `</div>`;
+    function toggleCategory(key, el) {
+        const content = document.getElementById(`content-${key}`);
+        const collapsed = content.classList.toggle('collapsed');
+        el.classList.toggle('is-collapsed', collapsed);
     }
 
     function updatePrice(id, val) { prices[id] = parseInt(val) || 0; saveToStorage(); calcTotal(); renderCart(); }
-    
     function updateQty(key, delta, parentId) {
         qtys[key] = Math.max(0, (qtys[key] || 0) + delta);
         document.getElementById(`qty-${key}`).value = qtys[key];
-        
-        const prow = document.getElementById(`prow-${key}`);
-        if(prow) qtys[key] > 0 ? prow.classList.add('active') : prow.classList.remove('active');
-        
+        const prow = document.getElementById(`prow-${key}`); if(prow) qtys[key] > 0 ? prow.classList.add('active') : prow.classList.remove('active');
         const item = items.find(i => i.id === parentId);
         let anyActive = item.players ? players.some(p => qtys[`${parentId}-${p}`] > 0) : qtys[parentId] > 0;
         document.getElementById(`row-${parentId}`).classList.toggle('active', anyActive);
-        
         saveToStorage(); calcTotal(); renderCart();
     }
 
@@ -272,16 +281,10 @@
             if (item.players) players.forEach(player => total += p * (qtys[`${item.id}-${player}`] || 0));
             else total += p * (qtys[item.id] || 0);
         });
-        
-        // 更新韓元顯示
         document.getElementById('totalDisplay').innerText = total.toLocaleString() + ' KRW';
-        
-        // 更新各國匯率顯示 (這行剛才漏了！)
         document.getElementById('convDisplay').innerText = `≈ ${Math.round(total*rates.JPY).toLocaleString()} JPY | ${Math.round(total*rates.HKD).toLocaleString()} HKD | ${Math.round(total*rates.TWD).toLocaleString()} TWD`;
-        
         const count = Math.floor(total / 50000);
-        const pcEl = document.getElementById('pcDisplay');
-        pcEl.innerText = count > 0 ? `✨ 達成！可獲 ${count} 張小卡 (差 ${(50000 - total % 50000).toLocaleString()} 多一張)` : `還差 ${(50000 - total).toLocaleString()} KRW 獲得小卡`;
+        document.getElementById('pcDisplay').innerText = count > 0 ? `✨ 達成！可獲 ${count} 張小卡 (差 ${(50000 - total % 50000).toLocaleString()} 多一張)` : `還差 ${(50000 - total).toLocaleString()} KRW 獲得小卡`;
         return { total, count };
     }
 
@@ -294,60 +297,68 @@
     }
 
     function renderCart() {
-        const cartContent = document.getElementById('cartContent');
-        let html = ""; let hasItems = false;
+        const div = document.getElementById('cartContent'); let html = ""; let hasItems = false;
         items.forEach(item => {
             const p = prices[item.id] || 0;
-            if (item.players) {
-                players.forEach(player => {
-                    const q = qtys[`${item.id}-${player}`];
-                    if(q > 0) {
-                        hasItems = true;
-                        html += `<div class="cart-item"><div><div class="cart-item-name">${item.name} [${player}]</div><div class="cart-item-meta">₩${p.toLocaleString()} × ${q}</div></div><div style="font-weight:900; color:#D9384A;">${(p*q).toLocaleString()}</div></div>`;
-                    }
-                });
-            } else if(qtys[item.id] > 0) {
-                hasItems = true;
-                html += `<div class="cart-item"><div><div class="cart-item-name">${item.name}</div><div class="cart-item-meta">₩${p.toLocaleString()} × ${qtys[item.id]}</div></div><div style="font-weight:900; color:#D9384A;">${(p*qtys[item.id]).toLocaleString()}</div></div>`;
-            }
+            const process = (name, q) => { if(q > 0) { hasItems = true; html += `<div class="cart-item"><div><div style="font-size:13px; font-weight:bold;">${name}</div><div style="font-size:11px; color:#888;">₩${p.toLocaleString()} × ${q}</div></div><div style="font-weight:900; color:#D9384A;">${(p*q).toLocaleString()}</div></div>`; } };
+            if (item.players) players.forEach(pl => process(`${item.name} [${pl}]`, qtys[`${item.id}-${pl}`]));
+            else process(item.name, qtys[item.id]);
         });
-        cartContent.innerHTML = hasItems ? html : `<div style="text-align:center; padding:30px; color:#888;">購物車空空如也 🐧<br><span style="font-size:12px;">多買多享受</span></div>`;
+        div.innerHTML = hasItems ? html : `<div style="text-align:center; padding:30px; color:#888;">購物車空空如也 🐧<br><span style="font-size:12px;">多買多享受</span></div>`;
         document.getElementById('saveBtn').style.display = hasItems ? 'block' : 'none';
     }
 
     function saveOrder() {
-        const { total, count } = calcTotal();
-        let orderItems = [];
+        const { total, count } = calcTotal(); let orderItems = [];
         items.forEach(item => {
             const p = prices[item.id] || 0;
-            if (item.players) players.forEach(player => { if(qtys[`${item.id}-${player}`] > 0) orderItems.push(`${item.name} [${player}] (₩${p.toLocaleString()}) × ${qtys[`${item.id}-${player}`]}`); });
-            else if(qtys[item.id] > 0) orderItems.push(`${item.name} (₩${p.toLocaleString()}) × ${qtys[item.id]}`);
+            const push = (n, q) => { if(q>0) orderItems.push(`${n} (₩${p.toLocaleString()}) × ${q}`); };
+            if (item.players) players.forEach(pl => push(`${item.name} [${pl}]`, qtys[`${item.id}-${pl}`]));
+            else push(item.name, qtys[item.id]);
         });
-        orders.push({ id: Date.now(), total, count, items: orderItems });
+        orders.push({ id: Date.now(), name: `訂單 ${orders.length + 1}`, total, count, items: orderItems });
         Object.keys(qtys).forEach(k => qtys[k] = 0);
-        document.querySelectorAll('.qty-input').forEach(el => el.value = 0);
-        document.querySelectorAll('.item-row, .player-row').forEach(el => el.classList.remove('active'));
-        saveToStorage(); renderCart(); calcTotal(); renderOrderHistory();
+        saveToStorage(); initShop(); renderCart(); renderOrderHistory();
         alert("✅ 訂單已儲存！");
     }
 
     function renderOrderHistory() {
-        const div = document.getElementById('orderHistory');
-        if(orders.length === 0) { div.innerHTML = `<div style="text-align:center; color:#888; font-size:12px; padding:20px;">暫無紀錄</div>`; return; }
-        let html = "";
-        orders.forEach((o, idx) => {
-            html += `<div class="order-history-card"><div class="order-title" style="display:flex; justify-content:space-between;"><span>📦 訂單 ${idx+1} <br><small>共 ${o.total.toLocaleString()} KRW | ${o.count} 小卡</small></span><button onclick="deleteOrder(${o.id})" style="background:none; border:none; font-size:18px;">🗑️</button></div>`;
+        const div = document.getElementById('orderHistory'); if(orders.length === 0) { div.innerHTML = `<div style="text-align:center; color:#888; font-size:12px; padding:20px;">暫無紀錄</div>`; document.getElementById('allOrdersSummary').innerHTML = ""; return; }
+        let html = ""; let gTotal = 0; let gCount = 0;
+        orders.forEach(o => {
+            gTotal += o.total; gCount += o.count;
+            html += `<div class="order-history-card"><div class="order-title" onclick="renameOrder(${o.id})">📦 ${o.name} <span style="font-size:10px; font-weight:normal;">(點擊改名)</span></div><div style="font-size:12px; color:#D9384A; font-weight:bold; margin-bottom:10px;">共 ${o.total.toLocaleString()} KRW | ${o.count} 小卡</div>`;
             o.items.forEach(line => html += `<div class="order-item-line">${line}</div>`);
-            html += `</div>`;
+            html += `<button onclick="deleteOrder(${o.id})" style="background:none; border:none; color:#888; font-size:11px; margin-top:10px; cursor:pointer;">[ 🗑️ 刪除此單 ]</button></div>`;
         });
         div.innerHTML = html;
+        document.getElementById('allOrdersSummary').innerHTML = `<div class="summary-box"><div style="font-size:12px; opacity:0.8;">所有訂單總計匯總</div><div style="font-size:24px; font-weight:900; margin:8px 0;">₩ ${gTotal.toLocaleString()}</div><div style="font-size:14px; color:#888; margin-bottom:10px;">≈ ${Math.round(gTotal*rates.JPY).toLocaleString()} JPY | ${Math.round(gTotal*rates.HKD).toLocaleString()} HKD | ${Math.round(gTotal*rates.TWD).toLocaleString()} TWD</div><div style="font-size:16px; font-weight:bold; color:#FFD700;">✨ 共可獲得 ${gCount} 張小卡</div></div>`;
     }
 
-    function deleteOrder(id) { orders = orders.filter(o => o.id !== id); saveToStorage(); renderOrderHistory(); }
+    function renameOrder(id) {
+        const o = orders.find(o => o.id === id);
+        const newName = prompt("請輸入訂單名稱：", o.name);
+        if (newName) { o.name = newName; saveToStorage(); renderOrderHistory(); }
+    }
+    function deleteOrder(id) { if(confirm("確定刪除這張訂單嗎？")) { orders = orders.filter(o => o.id !== id); saveToStorage(); renderOrderHistory(); } }
     
-    function resetEverything() { if(confirm("確定要清空所有已輸入的價格、數量和訂單紀錄嗎？")) { localStorage.removeItem('t1_cart_v13'); location.reload(); } }
+    function forceRefresh() {
+        if(confirm("將手動刷新頁面以獲取最新數據。目前的選擇將被儲存，確定嗎？")) {
+            window.location.reload(true);
+        }
+    }
 
-    getRates(); initShop();
+    function resetCurrentSelection() {
+        if(confirm("確定要清空『目前選購』的數量嗎？")) {
+            Object.keys(qtys).forEach(k => qtys[k] = 0);
+            saveToStorage(); initShop(); renderCart();
+            alert("✅ 目前選購已清空！");
+        }
+    }
+    
+    function resetEverything() { if(confirm("⚠️ 注意：這將刪除所有儲存數據！確定嗎？")) { localStorage.removeItem('t1_cart_v14_3'); location.reload(); } }
+
+    initShop();
 </script>
 </body>
 </html>
