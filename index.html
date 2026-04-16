@@ -61,7 +61,8 @@
         
         .footer-total { position: fixed; bottom: 65px; left: 0; right: 0; background: var(--card-bg); border-top: 3px solid var(--t1-red); padding: 10px 15px; text-align: center; z-index: 999; }
         .total-krw { font-size: 24px; font-weight: 900; color: var(--t1-red); }
-        .pc-hint { font-size: 11px; margin-top: 5px; color: #000; background: #FFD700; padding: 4px 12px; border-radius: 20px; display: inline-block; font-weight: bold; }
+        .converts { font-size: 12px; color: #888; margin-top: 4px; font-weight: bold; }
+        .pc-hint { font-size: 11px; margin-top: 8px; color: #000; background: #FFD700; padding: 4px 12px; border-radius: 20px; display: inline-block; font-weight: bold; }
         
         .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #2D2D2D; display: flex; height: 65px; z-index: 1000; }
         .tab-btn { flex: 1; background: transparent; color: #888; border: none; font-size: 15px; font-weight: bold; cursor: pointer; }
@@ -72,8 +73,8 @@
 
 <div class="header">
     <h1>T1 HG獻金大計 🐿️🐯🐈‍⬛🐨🐶</h1>
-    <p>①想就是買②不買會後悔</p>
-    <p>使用最新版請手動刷新網頁</p>
+    <p>①想就是買 ②不買會後悔</p>
+    <p style="margin-top: 8px; color: #D9384A; font-size: 10px;">V3.0 | 使用最新版請手動刷新網頁</p>
 </div>
 
 <div class="currency-bar" id="rateBar">更新匯率中...</div>
@@ -93,6 +94,7 @@
 
 <div class="footer-total">
     <div class="total-krw" id="totalDisplay">0 KRW</div>
+    <div id="convDisplay" class="converts">≈ 0 JPY | 0 HKD | 0 TWD</div>
     <div class="pc-hint" id="pcDisplay">還差 50,000 KRW 獲得小卡</div>
 </div>
 
@@ -200,6 +202,7 @@
             const d = await r.json();
             rates = { JPY: d.rates.JPY, HKD: d.rates.HKD, TWD: d.rates.TWD };
             document.getElementById('rateBar').innerText = `1k KRW ≈ ${Math.round(rates.JPY*1000)} JPY | ${Math.round(rates.HKD*1000,1)} HKD | ${Math.round(rates.TWD*1000,1)} TWD`;
+            calcTotal(); // 獲取匯率後重算一次
         } catch(e) {}
     }
 
@@ -266,7 +269,13 @@
             if (item.players) players.forEach(player => total += p * (qtys[`${item.id}-${player}`] || 0));
             else total += p * (qtys[item.id] || 0);
         });
+        
+        // 更新韓元顯示
         document.getElementById('totalDisplay').innerText = total.toLocaleString() + ' KRW';
+        
+        // 更新各國匯率顯示 (這行剛才漏了！)
+        document.getElementById('convDisplay').innerText = `≈ ${Math.round(total*rates.JPY).toLocaleString()} JPY | ${Math.round(total*rates.HKD).toLocaleString()} HKD | ${Math.round(total*rates.TWD).toLocaleString()} TWD`;
+        
         const count = Math.floor(total / 50000);
         const pcEl = document.getElementById('pcDisplay');
         pcEl.innerText = count > 0 ? `✨ 達成！可獲 ${count} 張小卡 (差 ${(50000 - total % 50000).toLocaleString()} 多一張)` : `還差 ${(50000 - total).toLocaleString()} KRW 獲得小卡`;
@@ -299,7 +308,7 @@
                 html += `<div class="cart-item"><div><div class="cart-item-name">${item.name}</div><div class="cart-item-meta">₩${p.toLocaleString()} × ${qtys[item.id]}</div></div><div style="font-weight:900; color:#D9384A;">${(p*qtys[item.id]).toLocaleString()}</div></div>`;
             }
         });
-        cartContent.innerHTML = hasItems ? html : `<div style="text-align:center; padding:30px; color:#888;">購物車空空如也 🐧<br><span style="font-size:12px;">多買多享受喔</span></div>`;
+        cartContent.innerHTML = hasItems ? html : `<div style="text-align:center; padding:30px; color:#888;">購物車空空如也 🐧<br><span style="font-size:12px;">多買多享受</span></div>`;
         document.getElementById('saveBtn').style.display = hasItems ? 'block' : 'none';
     }
 
