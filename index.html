@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T1 HG Wishlist v3.1</title>
+    <title>T1 HG Wishlist v3.2</title>
     <style>
         :root { 
             --t1-red: #D9384A; --t1-charcoal: #2D2D2D; --bg-color: #F8F9FA; --card-bg: #FFFFFF; 
@@ -105,17 +105,17 @@
 </div>
 
 <script>
-    const CURRENT_VERSION = "20260416-V3-1"; 
+    const CURRENT_VERSION = "20260417-V3-2"; 
 
     let rates = { JPY: 0.111, HKD: 0.0057, TWD: 0.0235 };
     let prices = {}; let qtys = {}; let orders = [];
     const players = ["DORAN", "ONER", "FAKER", "PEYZ", "KERIA"];
     const items = [
         { id: 1, name: "[LoL] 2026 T1 Uniform Jacket | 隊服外套", cat: "gen", price: 189000 }, 
-        { id: 2, name: "[RSG x T1] Amal Plushie Keychain | Amal 絨毛娃吊飾", cat: "gen" },
-        { id: 3, name: "[RSG x T1] Amal Figure Keychain | Amal 吊飾", cat: "gen" }, 
-        { id: 4, name: "[RSG x T1] Amal and ATi Desk Mat | Amal & ATi 桌墊", cat: "gen" },
-        { id: 5, name: "[RSG x T1] Amal Plushie | Amal 絨毛娃", cat: "gen" }, 
+        { id: 2, name: "[RSG x T1] Amal Plushie Keychain | Amal 絨毛娃吊飾", cat: "gen", price: 18000 },
+        { id: 3, name: "[RSG x T1] Amal Figure Keychain | Amal 吊飾", cat: "gen", price: 14000 }, 
+        { id: 4, name: "[RSG x T1] Amal and ATi Desk Mat | Amal & ATi 桌墊", cat: "gen", price: 25000 },
+        { id: 5, name: "[RSG x T1] Amal Plushie | Amal 絨毛娃", cat: "gen", price: 30000 }, 
         { id: 6, name: "Other Friends Plushie Keychain | 愚人娃", players: true, cat: "gen" , price: 16800 },
         { id: 7, name: "Other Friends Cushion Keychain Set | 動物/愚人抱枕吊飾組", players: true, cat: "gen" , price: 12600 }, 
         { id: 8, name: "Other Friends Pin Button Set | 愚人徽章套組", players: true, cat: "gen" , price: 12600 },
@@ -134,52 +134,52 @@
         { id: 21, name: "Animal Friends Circus Diorama | 馬戲團 立牌", cat: "gen", price: 15800 }, 
         { id: 22, name: "Animal Friends Circus Collect Book | 馬戲團 小卡收集冊", cat: "gen", price: 14800 },
         
-        { id: 23, name: "T1 Home Ground Player T-Shirt - Doran | 主場限定T (Doran)", cat: "hg" }, 
-        { id: 24, name: "T1 Home Ground Player T-Shirt - Oner | 主場限定T (Oner)", cat: "hg" },
-        { id: 25, name: "T1 Home Ground Player T-Shirt - Faker | 主場限定T (Faker)", cat: "hg" }, 
-        { id: 26, name: "T1 Home Ground Player T-Shirt - Peyz | 主場限定T (Peyz)", cat: "hg" },
-        { id: 27, name: "T1 Home Ground Player T-Shirt - Keria | 主場限定T (Keria)", cat: "hg" }, 
-        { id: 28, name: "T1 Home Ground Player Pin Button | 主場限定 選手徽章", players: true, cat: "hg" },
-        { id: 29, name: "T1 Home Ground Player Slogan | 主場限定 選手手幅", players: true, cat: "hg" }, 
-        { id: 30, name: "T1 Home Ground Player Fan Keychain | 主場限定 應援扇吊飾", players: true, cat: "hg" },
-        { id: 31, name: "T1 Home Ground Player Bracelet | 主場限定 選手手環", players: true, cat: "hg" }, 
-        { id: 32, name: "T1 Home Ground T-Shirt | 主場限定 Logo T恤", cat: "hg" },
-        { id: 33, name: "T1 Home Ground Bandana | 主場限定 頭巾", cat: "hg" }, 
-        { id: 34, name: "T1 Home Ground Reusable Bag | 主場限定 環保袋", cat: "hg" },
-        { id: 35, name: "T1 Home Ground Pin Button Set | 主場限定 徽章套組", cat: "hg" }, 
-        { id: 36, name: "T1 Home Ground Circus T-Shirt - Pigment | 主場限定 馬戲團T恤 (水洗色)", cat: "hg" },
-        { id: 37, name: "T1 Home Ground Circus T-Shirt - White | 主場限定 馬戲團T恤 (白)", cat: "hg" },
+        { id: 23, name: "T1 Home Ground Player T-Shirt - Doran | 主場限定T (Doran)", cat: "hg", price: 45000 }, 
+        { id: 24, name: "T1 Home Ground Player T-Shirt - Oner | 主場限定T (Oner)", cat: "hg", price: 45000 },
+        { id: 25, name: "T1 Home Ground Player T-Shirt - Faker | 主場限定T (Faker)", cat: "hg", price: 45000 }, 
+        { id: 26, name: "T1 Home Ground Player T-Shirt - Peyz | 主場限定T (Peyz)", cat: "hg", price: 45000 },
+        { id: 27, name: "T1 Home Ground Player T-Shirt - Keria | 主場限定T (Keria)", cat: "hg", price: 45000 }, 
+        { id: 28, name: "T1 Home Ground Player Pin Button | 主場限定 選手徽章", players: true, cat: "hg", price: 4800 },
+        { id: 29, name: "T1 Home Ground Player Slogan | 主場限定 選手手幅", players: true, cat: "hg", price: 12000 }, 
+        { id: 30, name: "T1 Home Ground Player Fan Keychain | 主場限定 應援扇吊飾", players: true, cat: "hg", price: 6300 },
+        { id: 31, name: "T1 Home Ground Player Bracelet | 主場限定 選手手環", players: true, cat: "hg", price: 12000 }, 
+        { id: 32, name: "T1 Home Ground T-Shirt | 主場限定 Logo T恤", cat: "hg", price: 42000 },
+        { id: 33, name: "T1 Home Ground Bandana | 主場限定 頭巾", cat: "hg", price: 12600 }, 
+        { id: 34, name: "T1 Home Ground Reusable Bag | 主場限定 環保袋", cat: "hg", price: 8000 },
+        { id: 35, name: "T1 Home Ground Pin Button Set | 主場限定 徽章套組", cat: "hg", price: 6300 }, 
+        { id: 36, name: "T1 Home Ground Circus T-Shirt - Pigment | 主場限定 馬戲團T恤 (水洗色)", cat: "hg", price: 40000 },
+        { id: 37, name: "T1 Home Ground Circus T-Shirt - White | 主場限定 馬戲團T恤 (白)", cat: "hg", price: 40000 },
         
-        { id: 38, name: "T1 Picnic Mat | 野餐墊", cat: "gen" }, 
-        { id: 39, name: "T1 Picnic Stool | 野餐摺疊椅", cat: "gen" },
-        { id: 40, name: "T1 Picnic Glass Set | 野餐玻璃杯組", cat: "gen" }, 
-        { id: 41, name: "T1 Picnic Cutlery Set | 野餐餐具組", cat: "gen" },
-        { id: 42, name: "T1 Picnic Cooler Bag | 野餐保冷袋", cat: "gen" }, 
-        { id: 43, name: "T1 Mini Memory Camera | 迷你相機", cat: "gen" }, 
-        { id: 44, name: "T1 LCD Writing Tablet | 電子手寫板", cat: "gen" },
+        { id: 38, name: "T1 Picnic Mat | 野餐墊", cat: "gen", price: 30000 }, 
+        { id: 39, name: "T1 Picnic Stool | 野餐摺疊椅", cat: "gen", price: 25000 },
+        { id: 40, name: "T1 Picnic Glass Set | 野餐玻璃杯組", cat: "gen", price: 15000 }, 
+        { id: 41, name: "T1 Picnic Cutlery Set | 野餐餐具組", cat: "gen", price: 25000 },
+        { id: 42, name: "T1 Picnic Cooler Bag | 野餐保冷袋", cat: "gen", price: 35000 }, 
+        { id: 43, name: "T1 Mini Memory Camera | 迷你相機", cat: "gen", price: 55000 }, 
+        { id: 44, name: "T1 LCD Writing Tablet | 電子手寫板", cat: "gen", price: 35000 },
         
-        { id: 45, name: "T1 Signature Perfume | T1 香水", cat: "pre" }, 
-        { id: 46, name: "[T1Klz] 4-Cut Photo Holder Keychain | 人生四格相框吊飾", cat: "pre" },
-        { id: 47, name: "[T1Klz] Boucle Keychain | T1Klz吊飾", players: true, cat: "pre" }, 
-        { id: 48, name: "[T1Klz] Random Comic Strip Sticker Set | T1Klz隨機漫畫貼紙", cat: "pre" },
-        { id: 49, name: "[T1Klz] Reusable Bag | T1Klz環保袋", cat: "pre" }, 
-        { id: 50, name: "[T1Klz] Deco Sticker Set | T1Klz貼紙組", cat: "pre" },
-        { id: 51, name: "[T1Klz] Photocard Stand | T1Klz小卡立牌", cat: "pre" }, 
-        { id: 52, name: "[T1 Everywhere] 2026 Plushie Keychain | 2026 全世踢娃", players: true, cat: "pre" },
-        { id: 53, name: "[T1 Everywhere] 2026 Plushie Pouch | 2026 全世踢收納包", players: true, cat: "pre" }, 
-        { id: 54, name: "2026 Happy T1 Package | 2026 happyT1 福袋", cat: "pre" },
-        { id: 55, name: "Costume Mini Friends Plushie Keychain | 動物人形娃", players: true, cat: "pre" }, 
-        { id: 56, name: "Costume Mini Friends Light Stick Cover | 動物手燈/應援棒 造型套", players: true, cat: "pre" },
-        { id: 57, name: "Costume Mini Friends Acrylic Keychain | 動物人形娃 壓克力吊飾", players: true, cat: "pre" }, 
-        { id: 58, name: "Costume Mini Friends ID Photocard Holder | 動物人形娃證件卡套", players: true, cat: "pre" },
-        { id: 59, name: "Costume Mini Friends Acrylic Photocard Stand | 動物人形娃 壓克力小卡立牌", players: true, cat: "pre" }, 
-        { id: 60, name: "Costume Mini Friends Artisan Keycap | 動物人形娃 手工鍵帽", players: true, cat: "pre" },
-        { id: 61, name: "Costume Mini Friends Soft Pin Button | 動物人形娃 軟膠徽章", players: true, cat: "pre" }, 
-        { id: 62, name: "Costume Mini Friends Cereal Bowl | 動物人形娃 麥片碗", cat: "pre" },
+        { id: 45, name: "T1 Signature Perfume | T1 香水", cat: "pre", price: 19000 }, 
+        { id: 46, name: "[T1Klz] 4-Cut Photo Holder Keychain | 人生四格相框吊飾", cat: "pre", price: 15000 },
+        { id: 47, name: "[T1Klz] Boucle Keychain | T1Klz吊飾", players: true, cat: "pre", price: 14000 }, 
+        { id: 48, name: "[T1Klz] Random Comic Strip Sticker Set | T1Klz隨機漫畫貼紙", cat: "pre", price: 5000 },
+        { id: 49, name: "[T1Klz] Reusable Bag | T1Klz環保袋", cat: "pre", price: 10500 }, 
+        { id: 50, name: "[T1Klz] Deco Sticker Set | T1Klz貼紙組", cat: "pre", price: 5000 },
+        { id: 51, name: "[T1Klz] Photocard Stand | T1Klz小卡立牌", cat: "pre", price: 13000 }, 
+        { id: 52, name: "[T1 Everywhere] 2026 Plushie Keychain | 2026 全世踢娃", players: true, cat: "pre", price: 25000 },
+        { id: 53, name: "[T1 Everywhere] 2026 Plushie Pouch | 2026 全世踢收納包", players: true, cat: "pre", price: 14000 }, 
+        { id: 54, name: "2026 Happy T1 Package | 2026 happyT1 福袋", cat: "pre", price: 40000 },
+        { id: 55, name: "Costume Mini Friends Plushie Keychain | 動物人形娃", players: true, cat: "pre", price: 16800 }, 
+        { id: 56, name: "Costume Mini Friends Light Stick Cover | 動物手燈/應援棒 造型套", players: true, cat: "pre", price: 18900 },
+        { id: 57, name: "Costume Mini Friends Acrylic Keychain | 動物人形娃 壓克力吊飾", players: true, cat: "pre", price: 6300 }, 
+        { id: 58, name: "Costume Mini Friends ID Photocard Holder | 動物人形娃證件卡套", players: true, cat: "pre", price: 6300 },
+        { id: 59, name: "Costume Mini Friends Acrylic Photocard Stand | 動物人形娃 壓克力小卡立牌", players: true, cat: "pre", price: 12000 }, 
+        { id: 60, name: "Costume Mini Friends Artisan Keycap | 動物人形娃 手工鍵帽", players: true, cat: "pre", price: 68300 },
+        { id: 61, name: "Costume Mini Friends Soft Pin Button | 動物人形娃 軟膠徽章", players: true, cat: "pre", price: 5300 }, 
+        { id: 62, name: "Costume Mini Friends Cereal Bowl | 動物人形娃 麥片碗", cat: "pre", price: 12600 },
         { id: 63, name: "[LoL] 2026 T1 Uniform Jersey | 2026 隊服 ", players: true, cat: "pre", price: 129000 }, 
         { id: 64, name: "2026 T1 Uniform Pants | 2026 隊服長褲", cat: "pre", price: 99000 },
-        { id: 65, name: "Shopping bag_Large | 購物袋 (大)", cat: "pre" }, 
-        { id: 66, name: "Shopping bag_small | 購物袋 (小)", cat: "pre" }
+        { id: 65, name: "Shopping bag_Large | 購物袋 (大)", cat: "pre", price: 2000 }, 
+        { id: 66, name: "Shopping bag_small | 購物袋 (小)", cat: "pre", price: 1500 }
     ];
 
     async function getRates() {
